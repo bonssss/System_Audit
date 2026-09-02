@@ -51,16 +51,16 @@ export default function DashboardPage() {
     loadData();
   }, []);
 
-  const mockScores = {
-    overall: 84,
-    grade: 'A' as const,
-    security: 78,
-    quality: 91,
-    performance: 88,
-    architecture: 82,
-    maintainability: 86,
-    documentation: 80,
-    testing: 75,
+  const defaultScores = {
+    overall: stats?.averageScores?.overall ?? 0,
+    grade: (stats?.averageScores?.grade || 'N/A') as any,
+    security: stats?.averageScores?.security ?? 0,
+    quality: stats?.averageScores?.quality ?? 0,
+    performance: stats?.averageScores?.performance ?? 0,
+    architecture: stats?.averageScores?.architecture ?? 0,
+    maintainability: stats?.averageScores?.maintainability ?? 0,
+    documentation: stats?.averageScores?.documentation ?? 0,
+    testing: stats?.averageScores?.testing ?? 0,
   };
 
   return (
@@ -173,8 +173,8 @@ export default function DashboardPage() {
 
         {/* Visualizations (Score Dial & Radar Chart) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <ProjectScoreDial scores={mockScores} />
-          <RadarMetricsChart scores={mockScores} />
+          <ProjectScoreDial scores={defaultScores} />
+          <RadarMetricsChart scores={defaultScores} />
         </div>
 
         {/* Repositories Directory Table */}
