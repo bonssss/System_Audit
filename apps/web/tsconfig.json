@@ -1,0 +1,41 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@ai-scanner/shared": ["../../packages/shared/src"],
+      "@ai-scanner/shared/*": ["../../packages/shared/src/*"],
+      "@ai-scanner/parser": ["../../packages/parser/src"],
+      "@ai-scanner/parser/*": ["../../packages/parser/src/*"],
+      "@ai-scanner/security": ["../../packages/security/src"],
+      "@ai-scanner/security/*": ["../../packages/security/src/*"],
+      "@ai-scanner/scanner-core": ["../../packages/scanner-core/src"],
+      "@ai-scanner/scanner-core/*": ["../../packages/scanner-core/src/*"],
+      "@ai-scanner/ai": ["../../packages/ai/src"],
+      "@ai-scanner/ai/*": ["../../packages/ai/src/*"],
+      "@ai-scanner/reports": ["../../packages/reports/src"],
+      "@ai-scanner/reports/*": ["../../packages/reports/src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

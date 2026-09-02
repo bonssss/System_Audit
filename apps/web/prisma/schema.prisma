@@ -1,0 +1,189 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // Can be switched to "postgresql" via DATABASE_URL
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String     @id @default(cuid())
+  name          String?
+  email         String     @unique
+  passwordHash  String?
+  role          String     @default("DEVELOPER") // ADMIN, DEVELOPER, AUDITOR
+  avatarUrl     String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  projects      Project[]
+  apiKeys       ApiKey[]
+  auditLogs     AuditLog[]
+}
+
+model ApiKey {
+  id          String    @id @default(cuid())
+  name        String
+  keyHash     String    @unique
+  prefix      String
+  lastUsedAt  DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime  @default(now())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Project {
+  id             String        @id @default(cuid())
+  name           String
+  description    String?
+  repositoryUrl  String?
+  defaultBranch  String        @default("main")
+  sourceType     String        @default("ZIP_UPLOAD") // ZIP_UPLOAD, GITHUB, GITLAB, BITBUCKET, LOCAL
+  latestScore    Int?
+  latestGrade    String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  userId         String?
+  user           User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  scans          Scan[]
+  repositories   Repository[]
+}
+
+model Repository {
+  id          String   @id @default(cuid())
+  projectId   String
+  provider    String   @default("github") // github, gitlab, bitbucket, local
+  repoUrl     String
+  branch      String   @default("main")
+  isPrivate   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Scan {
+  id                  String           @id @default(cuid())
+  projectId           String
+  status              String           @default("PENDING") // PENDING, RUNNING, COMPLETED, FAILED
+  errorMessage        String?
+  durationMs          Int              @default(0)
+  overallScore        Int              @default(100)
+  grade               String           @default("A+")
+  securityScore       Int              @default(100)
+  qualityScore        Int              @default(100)
+  perfScore           Int              @default(100)
+  archScore           Int              @default(100)
+  maintainabilityScore Int             @default(100)
+  docScore            Int              @default(100)
+  testScore           Int              @default(100)
+  createdAt           DateTime         @default(now())
+  completedAt         DateTime?
+  project             Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  issues              Issue[]
+  reports             Report[]
+  statistics          Statistics?
+  dependencies        Dependency[]
+  files               FileRecord[]
+  languages           LanguageMetric[]
+}
+
+model Issue {
+  id              String   @id @default(cuid())
+  scanId          String
+  ruleId          String
+  title           String
+  description     String
+  category        String   // SECURITY, CODE_QUALITY, COMPLEXITY, DEPENDENCY, etc.
+  severity        String   // CRITICAL, HIGH, MEDIUM, LOW, INFO
+  filePath        String
+  startLine       Int
+  endLine         Int
+  snippet         String?
+  cwe             String?
+  owaspCategory   String?
+  remediationJson String?  // Serialized AIRemediation
+  status          String   @default("OPEN") // OPEN, CONFIRMED, RESOLVED, FALSE_POSITIVE, MUTED
+  createdAt       DateTime @default(now())
+  scan            Scan     @relation(fields: [scanId], references: [id], onDelete: Cascade)
+}
+
+model Statistics {
+  id                   String   @id @default(cuid())
+  scanId               String   @unique
+  totalFiles           Int      @default(0)
+  totalFolders         Int      @default(0)
+  totalLines           Int      @default(0)
+  codeLines            Int      @default(0)
+  blankLines           Int      @default(0)
+  commentLines         Int      @default(0)
+  commentPercentage    Int      @default(0)
+  classesCount         Int      @default(0)
+  functionsCount       Int      @default(0)
+  interfacesCount      Int      @default(0)
+  cyclomaticComplexity Int      @default(0)
+  cognitiveComplexity  Int      @default(0)
+  maintainabilityIndex Int      @default(100)
+  duplicateLinesCount  Int      @default(0)
+  duplicatePercentage  Int      @default(0)
+  deadCodeInstances    Int      @default(0)
+  scan                 Scan     @relation(fields: [scanId], references: [id], onDelete: Cascade)
+}
+
+model Dependency {
+  id               String   @id @default(cuid())
+  scanId           String
+  name             String
+  currentVersion   String
+  latestVersion    String?
+  isOutdated       Boolean  @default(false)
+  license          String?
+  isDirect         Boolean  @default(true)
+  ecosystem        String   // npm, maven, pip, gomod, cargo
+  vulnerabilitiesJson String? // Serialized list of CVEs
+  createdAt        DateTime @default(now())
+  scan             Scan     @relation(fields: [scanId], references: [id], onDelete: Cascade)
+}
+
+model FileRecord {
+  id         String   @id @default(cuid())
+  scanId     String
+  filePath   String
+  linesCount Int      @default(0)
+  fileSize   Int      @default(0)
+  language   String?
+  scan       Scan     @relation(fields: [scanId], references: [id], onDelete: Cascade)
+}
+
+model LanguageMetric {
+  id           String   @id @default(cuid())
+  scanId       String
+  language     String
+  filesCount   Int      @default(0)
+  linesOfCode  Int      @default(0)
+  blankLines   Int      @default(0)
+  commentLines Int      @default(0)
+  percentage   Int      @default(0)
+  color        String   @default("#6366f1")
+  scan         Scan     @relation(fields: [scanId], references: [id], onDelete: Cascade)
+}
+
+model Report {
+  id          String   @id @default(cuid())
+  scanId      String
+  format      String   // HTML, PDF, JSON, CSV
+  downloadUrl String?
+  content     String?  // Stored for direct download or cached
+  createdAt   DateTime @default(now())
+  scan        Scan     @relation(fields: [scanId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  resource  String
+  ipAddress String?
+  metadata  String?
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
