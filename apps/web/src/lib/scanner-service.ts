@@ -40,6 +40,16 @@ export function updateScanProgress(progress: ScanProgress) {
   }
 }
 
+/**
+ * Sanitize string for PostgreSQL UTF-8 text columns (removes null byte \0 which causes Postgres error 22021)
+ */
+function cleanUtf8(str: string | null | undefined): string {
+  if (!str) return '';
+  return str.replace(/\0/g, '').replace(/[\u0000]/g, '');
+}
+
+const BINARY_EXTENSIONS = /\.(png|jpe?g|gif|ico|webp|woff2?|ttf|eot|otf|mp3|mp4|mov|avi|webm|pdf|zip|tar|gz|7z|rar|exe|dll|so|dylib|bin|iso|dmg|class|jar|pyc|wasm)$/i;
+
 export async function extractZipFiles(buffer: Buffer): Promise<ProjectFileEntry[]> {
   const zip = await JSZip.loadAsync(buffer);
   const files: ProjectFileEntry[] = [];
@@ -49,19 +59,28 @@ export async function extractZipFiles(buffer: Buffer): Promise<ProjectFileEntry[
     if (zipEntry.dir) continue;
     // Normalize path and skip system/junk directories
     const path = rawPath.replace(/\\/g, '/');
-    if (path.includes('__MACOSX') || path.includes('.git/') || path.includes('node_modules/')) {
+    if (
+      path.includes('__MACOSX') ||
+      path.includes('.git/') ||
+      path.includes('node_modules/') ||
+      path.includes('.next/') ||
+      path.includes('dist/') ||
+      path.includes('build/') ||
+      BINARY_EXTENSIONS.test(path)
+    ) {
       continue;
     }
 
     try {
-      const content = await zipEntry.async('text');
+      const rawContent = await zipEntry.async('text');
+      const content = cleanUtf8(rawContent);
       files.push({
         path,
         content,
         size: content.length,
       });
     } catch {
-      // skip binary
+      // skip unreadable binary files
     }
   }
 
@@ -155,13 +174,13 @@ export async function executeProjectScan(
       await db.languageMetric.create({
         data: {
           scanId,
-          language: lang.language,
+          language: cleanUtf8(lang.language),
           filesCount: lang.filesCount,
           linesOfCode: lang.linesOfCode,
           blankLines: lang.blankLines,
           commentLines: lang.commentLines,
           percentage: lang.percentage,
-          color: lang.color,
+          color: cleanUtf8(lang.color),
         },
       });
     }
@@ -171,18 +190,18 @@ export async function executeProjectScan(
       await db.issue.create({
         data: {
           scanId,
-          ruleId: iss.ruleId,
-          title: iss.title,
-          description: iss.description,
-          category: iss.category,
-          severity: iss.severity,
-          filePath: iss.location.filePath,
+          ruleId: cleanUtf8(iss.ruleId),
+          title: cleanUtf8(iss.title),
+          description: cleanUtf8(iss.description),
+          category: cleanUtf8(iss.category),
+          severity: cleanUtf8(iss.severity),
+          filePath: cleanUtf8(iss.location.filePath),
           startLine: iss.location.startLine,
           endLine: iss.location.endLine,
-          snippet: iss.location.snippet || '',
-          cwe: iss.cwe,
-          owaspCategory: iss.owaspCategory,
-          remediationJson: iss.remediation ? JSON.stringify(iss.remediation) : null,
+          snippet: cleanUtf8(iss.location.snippet || ''),
+          cwe: iss.cwe ? cleanUtf8(iss.cwe) : null,
+          owaspCategory: iss.owaspCategory ? cleanUtf8(iss.owaspCategory) : null,
+          remediationJson: iss.remediation ? cleanUtf8(JSON.stringify(iss.remediation)) : null,
           status: 'OPEN',
         },
       });
@@ -193,14 +212,14 @@ export async function executeProjectScan(
       await db.dependency.create({
         data: {
           scanId,
-          name: dep.name,
-          currentVersion: dep.currentVersion,
-          latestVersion: dep.latestVersion || null,
+          name: cleanUtf8(dep.name),
+          currentVersion: cleanUtf8(dep.currentVersion),
+          latestVersion: dep.latestVersion ? cleanUtf8(dep.latestVersion) : null,
           isOutdated: dep.isOutdated,
-          license: dep.license || 'Unknown',
+          license: cleanUtf8(dep.license || 'Unknown'),
           isDirect: dep.isDirect,
-          ecosystem: dep.ecosystem,
-          vulnerabilitiesJson: JSON.stringify(dep.vulnerabilities),
+          ecosystem: cleanUtf8(dep.ecosystem),
+          vulnerabilitiesJson: cleanUtf8(JSON.stringify(dep.vulnerabilities)),
         },
       });
     }
@@ -210,43 +229,39 @@ export async function executeProjectScan(
       await db.fileRecord.create({
         data: {
           scanId,
-          filePath: file.path,
+          filePath: cleanUtf8(file.path),
           linesCount: file.content.split(/\r?\n/).length,
           fileSize: file.size,
-          language: file.path.split('.').pop() || 'txt',
+          language: cleanUtf8(file.path.split('.').pop() || 'txt'),
         },
       });
     }
 
-    // Save pre-generated reports
-    const project = await db.project.findUnique({ where: { id: projectId } });
-    const pName = project?.name || 'Scanned Project';
-
-    const htmlReport = generateInteractiveHtmlReport(scanResult, pName);
-    const pdfReport = generatePrintablePdfHtml(scanResult, pName);
-    const jsonReport = generateJsonReport(scanResult);
-    const csvReport = generateCsvReport(scanResult);
+    // Auto-generate reports
+    const html = generateInteractiveHtmlReport(scanResult);
+    const pdfHtml = generatePrintablePdfHtml(scanResult);
+    const csv = generateCsvReport(scanResult);
+    const json = generateJsonReport(scanResult);
 
     await db.report.createMany({
       data: [
-        { scanId, format: 'HTML', content: htmlReport },
-        { scanId, format: 'PDF', content: pdfReport },
-        { scanId, format: 'JSON', content: jsonReport },
-        { scanId, format: 'CSV', content: csvReport },
+        { scanId, format: 'HTML', content: cleanUtf8(html) },
+        { scanId, format: 'PDF', content: cleanUtf8(pdfHtml) },
+        { scanId, format: 'CSV', content: cleanUtf8(csv) },
+        { scanId, format: 'JSON', content: cleanUtf8(json) },
       ],
     });
 
-    scanResult.id = scanId;
     return scanResult;
-  } catch (err: any) {
-    logger.error({ err, scanId }, 'Scan failed');
+  } catch (error: any) {
+    logger.error({ error, scanId }, 'Project scan execution failed');
     await db.scan.update({
       where: { id: scanId },
       data: {
         status: 'FAILED',
-        errorMessage: err?.message || 'Internal analysis failure',
+        errorMessage: cleanUtf8(error.message || 'Unknown scan failure'),
       },
     });
-    throw err;
+    throw error;
   }
 }
