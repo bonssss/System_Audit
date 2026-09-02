@@ -1,0 +1,3 @@
+# Robots.txt for AI Project Scanner
+User-agent: *
+Allow: /
