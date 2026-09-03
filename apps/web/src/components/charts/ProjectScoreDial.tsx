@@ -13,27 +13,27 @@ export function ProjectScoreDial({ scores }: ProjectScoreDialProps) {
   const strokeDashoffset = circumference - (scores.overall / 100) * circumference;
 
   let strokeColor = '#10b981'; // emerald
-  let badgeColor = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+  let badgeColor = 'bg-emerald-50 text-emerald-700 border-emerald-300 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30';
 
   if (scores.overall < 60) {
     strokeColor = '#ef4444';
-    badgeColor = 'bg-rose-500/10 text-rose-400 border-rose-500/30';
+    badgeColor = 'bg-rose-50 text-rose-700 border-rose-300 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/30';
   } else if (scores.overall < 75) {
     strokeColor = '#f97316';
-    badgeColor = 'bg-orange-500/10 text-orange-400 border-orange-500/30';
+    badgeColor = 'bg-amber-50 text-amber-700 border-amber-300 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30';
   } else if (scores.overall < 88) {
-    strokeColor = '#6366f1';
-    badgeColor = 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30';
+    strokeColor = '#71717a';
+    badgeColor = 'bg-zinc-100 text-zinc-800 border-zinc-300 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700';
   }
 
   return (
-    <div className="clean-card p-6 flex flex-col justify-between">
+    <div className="clean-card p-6 flex flex-col justify-between shadow-sm">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             Security Health Index
           </h3>
-          <p className="text-xs text-slate-500 mt-0.5">Synthesized 14-engine rating</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Synthesized 14-engine rating</p>
         </div>
 
         <span className={`px-2.5 py-0.5 rounded text-xs font-bold font-mono border ${badgeColor}`}>
@@ -49,7 +49,7 @@ export function ProjectScoreDial({ scores }: ProjectScoreDialProps) {
               cx="72"
               cy="72"
               r={radius}
-              className="stroke-slate-800"
+              className="stroke-border"
               strokeWidth="8"
               fill="transparent"
             />
@@ -68,10 +68,10 @@ export function ProjectScoreDial({ scores }: ProjectScoreDialProps) {
           </svg>
           
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <span className="text-3xl font-bold text-white tracking-tight">
+            <span className="text-3xl font-bold text-foreground tracking-tight">
               {scores.overall}
             </span>
-            <span className="text-[10px] font-mono text-slate-500">
+            <span className="text-[10px] font-mono text-muted-foreground">
               / 100
             </span>
           </div>
@@ -79,34 +79,34 @@ export function ProjectScoreDial({ scores }: ProjectScoreDialProps) {
 
         {/* Flat Sub-Scores Matrix */}
         <div className="grid grid-cols-2 gap-2.5 w-full">
-          <div className="bg-[#0b0f19] border border-[#1f2937] rounded-lg p-3">
-            <div className="text-[10px] font-medium text-slate-400 uppercase">Security</div>
-            <div className="text-base font-bold text-white mt-0.5 font-mono">{scores.security}<span className="text-[10px] text-slate-500 font-normal">/100</span></div>
-            <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+          <div className="bg-background border border-border rounded-lg p-3">
+            <div className="text-[10px] font-medium text-muted-foreground uppercase">Security</div>
+            <div className="text-base font-bold text-foreground mt-0.5 font-mono">{scores.security}<span className="text-[10px] text-muted-foreground font-normal">/100</span></div>
+            <div className="w-full bg-muted h-1.5 rounded-full mt-2 overflow-hidden border border-border">
               <div className="bg-rose-500 h-full rounded-full" style={{ width: `${scores.security}%` }} />
             </div>
           </div>
 
-          <div className="bg-[#0b0f19] border border-[#1f2937] rounded-lg p-3">
-            <div className="text-[10px] font-medium text-slate-400 uppercase">Code Quality</div>
-            <div className="text-base font-bold text-white mt-0.5 font-mono">{scores.quality}<span className="text-[10px] text-slate-500 font-normal">/100</span></div>
-            <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-              <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${scores.quality}%` }} />
+          <div className="bg-background border border-border rounded-lg p-3">
+            <div className="text-[10px] font-medium text-muted-foreground uppercase">Code Quality</div>
+            <div className="text-base font-bold text-foreground mt-0.5 font-mono">{scores.quality}<span className="text-[10px] text-muted-foreground font-normal">/100</span></div>
+            <div className="w-full bg-muted h-1.5 rounded-full mt-2 overflow-hidden border border-border">
+              <div className="bg-foreground h-full rounded-full" style={{ width: `${scores.quality}%` }} />
             </div>
           </div>
 
-          <div className="bg-[#0b0f19] border border-[#1f2937] rounded-lg p-3">
-            <div className="text-[10px] font-medium text-slate-400 uppercase">Architecture</div>
-            <div className="text-base font-bold text-white mt-0.5 font-mono">{scores.architecture}<span className="text-[10px] text-slate-500 font-normal">/100</span></div>
-            <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-              <div className="bg-blue-500 h-full rounded-full" style={{ width: `${scores.architecture}%` }} />
+          <div className="bg-background border border-border rounded-lg p-3">
+            <div className="text-[10px] font-medium text-muted-foreground uppercase">Architecture</div>
+            <div className="text-base font-bold text-foreground mt-0.5 font-mono">{scores.architecture}<span className="text-[10px] text-muted-foreground font-normal">/100</span></div>
+            <div className="w-full bg-muted h-1.5 rounded-full mt-2 overflow-hidden border border-border">
+              <div className="bg-foreground/80 h-full rounded-full" style={{ width: `${scores.architecture}%` }} />
             </div>
           </div>
 
-          <div className="bg-[#0b0f19] border border-[#1f2937] rounded-lg p-3">
-            <div className="text-[10px] font-medium text-slate-400 uppercase">Maintainability</div>
-            <div className="text-base font-bold text-white mt-0.5 font-mono">{scores.maintainability}<span className="text-[10px] text-slate-500 font-normal">/100</span></div>
-            <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+          <div className="bg-background border border-border rounded-lg p-3">
+            <div className="text-[10px] font-medium text-muted-foreground uppercase">Maintainability</div>
+            <div className="text-base font-bold text-foreground mt-0.5 font-mono">{scores.maintainability}<span className="text-[10px] text-muted-foreground font-normal">/100</span></div>
+            <div className="w-full bg-muted h-1.5 rounded-full mt-2 overflow-hidden border border-border">
               <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${scores.maintainability}%` }} />
             </div>
           </div>

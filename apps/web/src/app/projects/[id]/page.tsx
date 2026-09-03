@@ -42,7 +42,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
   if (isLoading) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center min-h-[60vh] space-y-4">
-        <div className="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-10 h-10 border-4 border-foreground border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -50,8 +50,8 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
   if (!project) {
     return (
       <div className="flex-1 p-8 text-center">
-        <h2 className="text-lg font-bold text-white">Project Not Found</h2>
-        <Link href="/projects" className="inline-block mt-4 text-indigo-400 text-xs font-bold">
+        <h2 className="text-lg font-bold text-foreground">Project Not Found</h2>
+        <Link href="/projects" className="inline-block mt-4 text-foreground underline text-xs font-bold">
           ← Return to Projects
         </Link>
       </div>
@@ -72,19 +72,19 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
           <div className="flex items-center gap-3">
             <Link
               href="/projects"
-              className="p-2 rounded-xl bg-[#141d33] border border-[#1e2d4d] text-slate-400 hover:text-white transition-colors"
+              className="p-2 rounded-xl bg-surface border border-border text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
             </Link>
             <div>
-              <div className="text-xs text-slate-400 font-mono">Projects / {project.name}</div>
-              <h2 className="text-xl font-extrabold text-white tracking-tight">{project.name}</h2>
+              <div className="text-xs text-muted-foreground font-mono">Projects / {project.name}</div>
+              <h2 className="text-xl font-extrabold text-foreground tracking-tight">{project.name}</h2>
             </div>
           </div>
 
           <button
             onClick={() => setIsUploadOpen(true)}
-            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-lg shadow-indigo-600/30"
+            className="flex items-center gap-2 bg-foreground text-background hover:opacity-90 text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-sm"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>Rescan Project</span>
@@ -92,14 +92,14 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Scan History Table */}
-        <div className="bg-[#0f172a] border border-[#1e293b] rounded-2xl shadow-xl overflow-hidden">
-          <div className="p-5 border-b border-[#1e293b]">
-            <h3 className="text-base font-bold text-white">Scan History & Audit Logs</h3>
+        <div className="clean-card rounded-2xl shadow-sm overflow-hidden">
+          <div className="p-5 border-b border-border">
+            <h3 className="text-base font-bold text-foreground">Scan History & Audit Logs</h3>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-[#0b101d] text-[11px] uppercase tracking-wider text-slate-400 border-b border-[#1e293b]">
+            <table className="w-full text-left text-xs text-foreground">
+              <thead className="bg-muted/40 text-[11px] uppercase tracking-wider text-muted-foreground border-b border-border">
                 <tr>
                   <th className="py-3 px-5 font-semibold">Scan Date</th>
                   <th className="py-3 px-5 font-semibold">Health Grade</th>
@@ -109,38 +109,38 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                   <th className="py-3 px-5 text-right font-semibold">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#1e293b]">
+              <tbody className="divide-y divide-border">
                 {project.scans.map((scan: any) => {
                   const gradeBadge = getGradeBadge(scan.grade || 'A');
 
                   return (
-                    <tr key={scan.id} className="hover:bg-[#131c31] transition-colors">
-                      <td className="py-4 px-5 font-mono text-[11px]">
+                    <tr key={scan.id} className="hover:bg-surface-hover/80 transition-colors">
+                      <td className="py-4 px-5 font-mono text-[11px] text-muted-foreground">
                         {new Date(scan.createdAt).toLocaleString()}
                       </td>
 
                       <td className="py-4 px-5">
-                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-black border ${gradeBadge}`}>
+                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${gradeBadge}`}>
                           GRADE {scan.grade}
                         </span>
                       </td>
 
-                      <td className="py-4 px-5 font-bold text-slate-100">
+                      <td className="py-4 px-5 font-bold text-foreground">
                         {scan.overallScore} / 100
                       </td>
 
-                      <td className="py-4 px-5 font-mono text-slate-300">
+                      <td className="py-4 px-5 font-mono text-muted-foreground">
                         {scan.issues.length} detected
                       </td>
 
-                      <td className="py-4 px-5 font-mono text-slate-400 text-[11px]">
+                      <td className="py-4 px-5 font-mono text-muted-foreground text-[11px]">
                         {scan.durationMs}ms
                       </td>
 
                       <td className="py-4 px-5 text-right">
                         <Link
                           href={`/scans/${scan.id}`}
-                          className="inline-flex items-center gap-1 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                          className="inline-flex items-center gap-1 bg-muted hover:bg-foreground hover:text-background text-foreground border border-border px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
                         >
                           <span>Open Audit</span>
                           <ArrowRight className="w-3.5 h-3.5" />

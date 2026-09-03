@@ -43,24 +43,24 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-[#0b0f19]">
-      <div className="w-full max-w-md bg-[#111827] border border-[#1f2937] rounded-2xl p-8 shadow-2xl space-y-6">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-background transition-colors duration-200">
+      <div className="w-full max-w-md bg-surface border border-border rounded-2xl p-8 shadow-lg space-y-6 transition-colors">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-xl bg-indigo-600 flex items-center justify-center text-white mx-auto shadow-sm">
+          <div className="w-12 h-12 rounded-xl bg-foreground text-background flex items-center justify-center mx-auto shadow-sm">
             <ShieldAlert className="w-6 h-6" />
           </div>
-          <h1 className="text-xl font-bold text-white tracking-tight">
+          <h1 className="text-xl font-bold text-foreground tracking-tight">
             Create an Account
           </h1>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-muted-foreground">
             Get started with AI-powered code auditing & security
           </p>
         </div>
 
         {/* Error Alert */}
         {errorMsg && (
-          <div className="p-3.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs flex items-center gap-2">
+          <div className="p-3.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 flex-shrink-0" />
             <span>{errorMsg}</span>
           </div>
@@ -69,7 +69,7 @@ export default function RegisterPage() {
         {/* Register Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+            <label className="text-xs font-semibold text-foreground block mb-1.5">
               Full Name:
             </label>
             <div className="relative">
@@ -79,14 +79,14 @@ export default function RegisterPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Alex Developer"
-                className="w-full bg-[#0b0f19] border border-[#1f2937] text-slate-200 text-xs pl-9 pr-4 py-2.5 rounded-lg focus:outline-none focus:border-indigo-500 transition-colors"
+                className="w-full bg-background border border-border text-foreground text-xs pl-9 pr-4 py-2.5 rounded-lg focus:outline-none focus:border-foreground transition-colors"
               />
-              <User className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+              <User className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+            <label className="text-xs font-semibold text-foreground block mb-1.5">
               Email Address:
             </label>
             <div className="relative">
@@ -96,14 +96,14 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@company.com"
-                className="w-full bg-[#0b0f19] border border-[#1f2937] text-slate-200 text-xs pl-9 pr-4 py-2.5 rounded-lg focus:outline-none focus:border-indigo-500 transition-colors"
+                className="w-full bg-background border border-border text-foreground text-xs pl-9 pr-4 py-2.5 rounded-lg focus:outline-none focus:border-foreground transition-colors"
               />
-              <Mail className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Mail className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+            <label className="text-xs font-semibold text-foreground block mb-1.5">
               Password:
             </label>
             <div className="relative">
@@ -113,20 +113,20 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Minimum 6 characters"
-                className="w-full bg-[#0b0f19] border border-[#1f2937] text-slate-200 text-xs pl-9 pr-4 py-2.5 rounded-lg focus:outline-none focus:border-indigo-500 transition-colors"
+                className="w-full bg-background border border-border text-foreground text-xs pl-9 pr-4 py-2.5 rounded-lg focus:outline-none focus:border-foreground transition-colors"
               />
-              <Lock className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Lock className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+            <label className="text-xs font-semibold text-foreground block mb-1.5">
               Organization Role:
             </label>
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full bg-[#0b0f19] border border-[#1f2937] text-slate-200 text-xs px-3 py-2.5 rounded-lg focus:outline-none focus:border-indigo-500"
+              className="w-full bg-background border border-border text-foreground text-xs px-3 py-2.5 rounded-lg focus:outline-none focus:border-foreground transition-colors"
             >
               <option value="DEVELOPER">Developer</option>
               <option value="AUDITOR">Security Auditor / Lead</option>
@@ -137,7 +137,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white text-xs font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm mt-2"
+            className="w-full bg-foreground text-background hover:opacity-90 disabled:opacity-50 text-xs font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all shadow-sm mt-2"
           >
             <span>{isLoading ? 'Creating Account...' : 'Register'}</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -145,10 +145,10 @@ export default function RegisterPage() {
         </form>
 
         {/* Footer Link */}
-        <div className="text-center pt-2 border-t border-[#1f2937]">
-          <p className="text-xs text-slate-400">
+        <div className="text-center pt-2 border-t border-border">
+          <p className="text-xs text-muted-foreground">
             Already have an account?{' '}
-            <Link href="/login" className="text-indigo-400 hover:text-indigo-300 font-semibold underline">
+            <Link href="/login" className="text-foreground hover:underline font-semibold">
               Sign In
             </Link>
           </p>

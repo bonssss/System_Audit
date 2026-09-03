@@ -58,8 +58,8 @@ export default function ScanDetailPage({ params }: { params: Promise<{ id: strin
   if (isLoading) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center min-h-[60vh] space-y-4">
-        <div className="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-xs text-slate-400 font-mono">Loading code scan audit artifacts...</p>
+        <div className="w-10 h-10 border-4 border-foreground border-t-transparent rounded-full animate-spin" />
+        <p className="text-xs text-muted-foreground font-mono">Loading code scan audit artifacts...</p>
       </div>
     );
   }
@@ -67,9 +67,9 @@ export default function ScanDetailPage({ params }: { params: Promise<{ id: strin
   if (!scan) {
     return (
       <div className="flex-1 p-8 text-center">
-        <h2 className="text-lg font-bold text-white">Scan Not Found</h2>
-        <p className="text-xs text-slate-400 mt-1">The requested scan ID could not be loaded.</p>
-        <Link href="/dashboard" className="inline-block mt-4 text-indigo-400 text-xs font-bold">
+        <h2 className="text-lg font-bold text-foreground">Scan Not Found</h2>
+        <p className="text-xs text-muted-foreground mt-1">The requested scan ID could not be loaded.</p>
+        <Link href="/dashboard" className="inline-block mt-4 text-foreground underline text-xs font-bold">
           ← Return to Dashboard
         </Link>
       </div>
@@ -113,15 +113,15 @@ export default function ScanDetailPage({ params }: { params: Promise<{ id: strin
           <div className="flex items-center gap-2">
             <Link
               href="/dashboard"
-              className="p-2 rounded-xl bg-[#141d33] border border-[#1e2d4d] text-slate-400 hover:text-white transition-colors"
+              className="p-2 rounded-xl bg-surface border border-border text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
             </Link>
             <div>
-              <div className="text-xs text-slate-400 font-mono">
+              <div className="text-xs text-muted-foreground font-mono">
                 Projects / {scan.project?.name || 'Project'} / Scans
               </div>
-              <h2 className="text-xl font-extrabold text-white tracking-tight">
+              <h2 className="text-xl font-extrabold text-foreground tracking-tight">
                 {scan.project?.name} Audit Overview
               </h2>
             </div>
@@ -130,9 +130,9 @@ export default function ScanDetailPage({ params }: { params: Promise<{ id: strin
           <div className="flex items-center gap-3">
             <button
               onClick={() => setActiveTab('REPORTS')}
-              className="flex items-center gap-2 bg-[#141d33] hover:bg-[#1a2542] text-slate-200 border border-[#1e2d4d] text-xs font-semibold px-4 py-2 rounded-xl transition-all shadow-sm"
+              className="flex items-center gap-2 bg-surface hover:bg-surface-hover text-foreground border border-border text-xs font-semibold px-4 py-2 rounded-xl transition-all shadow-sm"
             >
-              <FileText className="w-4 h-4 text-indigo-400" />
+              <FileText className="w-4 h-4 text-foreground" />
               <span>Export Audit</span>
             </button>
           </div>
@@ -144,7 +144,7 @@ export default function ScanDetailPage({ params }: { params: Promise<{ id: strin
         )}
 
         {/* Tab Navigation Menu */}
-        <div className="flex items-center gap-2 border-b border-[#1e293b] pb-2 overflow-x-auto text-xs font-semibold">
+        <div className="flex items-center gap-2 border-b border-border pb-2 overflow-x-auto text-xs font-semibold">
           {[
             { id: 'OVERVIEW', label: 'Overview & Scores', icon: LayoutDashboard },
             { id: 'ISSUES', label: `Issues (${scan.issues?.length || 0})`, icon: ShieldAlert },
@@ -162,8 +162,8 @@ export default function ScanDetailPage({ params }: { params: Promise<{ id: strin
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all whitespace-nowrap ${
                   isActive
-                    ? 'bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-600/30'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-[#11192e]'
+                    ? 'bg-foreground text-background font-bold shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-surface-hover'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -189,13 +189,13 @@ export default function ScanDetailPage({ params }: { params: Promise<{ id: strin
             {/* Quick Issues Preview */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <ShieldAlert className="w-4 h-4 text-red-400" />
+                <h3 className="text-base font-bold text-foreground flex items-center gap-2">
+                  <ShieldAlert className="w-4 h-4 text-rose-600 dark:text-rose-400" />
                   <span>Top Findings & Security Vulnerabilities</span>
                 </h3>
                 <button
                   onClick={() => setActiveTab('ISSUES')}
-                  className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold"
+                  className="text-xs text-foreground font-semibold hover:underline"
                 >
                   View all {scan.issues?.length || 0} issues →
                 </button>

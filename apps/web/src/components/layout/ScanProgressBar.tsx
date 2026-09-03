@@ -45,31 +45,31 @@ export function ScanProgressBar({ scanId, onComplete }: ScanProgressBarProps) {
   if (!progress) return null;
 
   return (
-    <div className="bg-[#10182b] border border-indigo-500/30 rounded-2xl p-5 shadow-2xl space-y-3 animate-in fade-in">
+    <div className="bg-surface border border-border rounded-2xl p-5 shadow-lg space-y-3 animate-in fade-in transition-colors">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-muted text-foreground flex items-center justify-center border border-border">
             <Cpu className="w-4 h-4 animate-spin" />
           </div>
           <div>
-            <div className="text-xs font-bold text-white flex items-center gap-2">
+            <div className="text-xs font-bold text-foreground flex items-center gap-2">
               <span>{progress.stepName}</span>
-              <span className="text-[10px] bg-indigo-500/20 text-indigo-400 px-1.5 py-0.2 rounded border border-indigo-500/30">
+              <span className="text-[10px] bg-muted text-foreground px-1.5 py-0.5 rounded border border-border">
                 Stage {progress.currentStep} / {progress.totalSteps}
               </span>
             </div>
-            <p className="text-[11px] text-slate-400">{progress.message}</p>
+            <p className="text-[11px] text-muted-foreground">{progress.message}</p>
           </div>
         </div>
 
         <div className="text-right">
-          <span className="text-base font-black text-indigo-400">{progress.percent}%</span>
+          <span className="text-base font-black text-foreground">{progress.percent}%</span>
         </div>
       </div>
 
-      <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+      <div className="w-full bg-muted h-2 rounded-full overflow-hidden border border-border">
         <div
-          className="bg-gradient-to-r from-indigo-500 to-emerald-400 h-full rounded-full transition-all duration-300 ease-out"
+          className="bg-foreground h-full rounded-full transition-all duration-300 ease-out"
           style={{ width: `${progress.percent}%` }}
         />
       </div>

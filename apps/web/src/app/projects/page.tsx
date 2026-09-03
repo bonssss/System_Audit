@@ -72,14 +72,14 @@ export default function ProjectsPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Filter repositories..."
-              className="w-full bg-[#0e111d] border border-white/[0.08] text-slate-200 text-xs pl-9 pr-4 py-2.5 rounded-2xl focus:outline-none focus:border-indigo-500 font-mono"
+              className="w-full bg-background border border-border text-foreground text-xs pl-9 pr-4 py-2.5 rounded-xl focus:outline-none focus:border-foreground transition-colors"
             />
-            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
           </div>
 
           <button
             onClick={() => setIsUploadOpen(true)}
-            className="flex items-center gap-1.5 bg-gradient-to-r from-indigo-500 to-cyan-500 hover:from-indigo-400 hover:to-cyan-400 text-white text-xs font-bold font-mono px-5 py-2.5 rounded-2xl shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all"
+            className="flex items-center gap-1.5 bg-foreground text-background hover:opacity-90 text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm transition-all"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>INGEST REPOSITORY</span>
@@ -94,36 +94,36 @@ export default function ProjectsPage() {
             return (
               <div
                 key={p.id}
-                className="linear-card rounded-3xl p-6 flex flex-col justify-between group space-y-4"
+                className="clean-card rounded-2xl p-6 flex flex-col justify-between group space-y-4"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="bg-[#121626] text-indigo-300 border border-indigo-500/20 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider">
+                    <span className="bg-muted text-foreground border border-border px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider">
                       {p.sourceType}
                     </span>
-                    <span className={`px-2.5 py-0.5 rounded-full text-xs font-black font-mono border ${gradeBadge}`}>
+                    <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold font-mono border ${gradeBadge}`}>
                       GRADE {p.latestGrade || 'A'}
                     </span>
                   </div>
 
-                  <h3 className="text-base font-bold text-white group-hover:text-indigo-300 transition-colors font-mono">
+                  <h3 className="text-base font-bold text-foreground group-hover:underline transition-colors font-mono">
                     {p.name}
                   </h3>
-                  <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-muted-foreground mt-1 line-clamp-2 leading-relaxed">
                     {p.description || 'Enterprise codebase'}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-slate-400 font-mono">
+                <div className="pt-4 border-t border-border flex items-center justify-between text-[11px] text-muted-foreground font-mono">
                   <span className="flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                    <Calendar className="w-3.5 h-3.5 text-muted-foreground" />
                     <span>{p.lastScanDate ? new Date(p.lastScanDate).toLocaleDateString() : 'Just now'}</span>
                   </span>
 
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => handleDelete(p.id, p.name)}
-                      className="w-8 h-8 rounded-xl border border-white/[0.08] hover:bg-rose-500/20 hover:border-rose-500/40 text-slate-400 hover:text-rose-300 flex items-center justify-center transition-colors"
+                      className="w-8 h-8 rounded-lg border border-border hover:bg-rose-500/10 hover:border-rose-500/30 text-muted-foreground hover:text-rose-500 flex items-center justify-center transition-colors"
                       title="Delete Repository"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -131,7 +131,7 @@ export default function ProjectsPage() {
 
                     <Link
                       href={`/scans/${p.id}`}
-                      className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-300 hover:bg-indigo-600 hover:text-white border border-indigo-500/30 flex items-center justify-center transition-all shadow-sm"
+                      className="w-8 h-8 rounded-lg bg-muted text-foreground hover:bg-foreground hover:text-background border border-border flex items-center justify-center transition-all shadow-sm"
                     >
                       <ArrowUpRight className="w-4 h-4" />
                     </Link>

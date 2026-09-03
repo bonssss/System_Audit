@@ -24,12 +24,12 @@ export function LanguageDonutChart({ languages }: LanguageDonutChartProps) {
   }));
 
   return (
-    <div className="clean-card p-6 flex flex-col justify-between">
+    <div className="clean-card p-6 flex flex-col justify-between shadow-sm">
       <div>
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           Ecosystem & Language Composition
         </h3>
-        <p className="text-xs text-slate-500 mt-0.5">Codebase footprint distribution</p>
+        <p className="text-xs text-muted-foreground mt-0.5">Codebase footprint distribution</p>
       </div>
 
       <div className="w-full h-56 mt-4">
@@ -45,18 +45,23 @@ export function LanguageDonutChart({ languages }: LanguageDonutChartProps) {
               dataKey="value"
             >
               {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} stroke="#111827" strokeWidth={2} />
+                <Cell key={`cell-${index}`} fill={entry.color} stroke="var(--card)" strokeWidth={2} />
               ))}
             </Pie>
             <Tooltip
-              contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '8px', color: '#fff' }}
+              contentStyle={{
+                backgroundColor: 'var(--card)',
+                borderColor: 'var(--border)',
+                borderRadius: '8px',
+                color: 'var(--foreground)',
+              }}
               formatter={(value: any, name: any, props: any) => [`${value.toLocaleString()} LOC (${props.payload.percentage}%)`, name]}
             />
             <Legend
               verticalAlign="bottom"
               height={36}
               iconType="circle"
-              formatter={(val) => <span className="text-xs text-slate-400">{val}</span>}
+              formatter={(val) => <span className="text-xs text-muted-foreground">{val}</span>}
             />
           </PieChart>
         </ResponsiveContainer>

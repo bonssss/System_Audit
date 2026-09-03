@@ -29,27 +29,32 @@ export function SeverityBarChart({ issues }: SeverityBarChartProps) {
     { severity: 'Critical', count: counts.CRITICAL, color: '#ef4444' },
     { severity: 'High', count: counts.HIGH, color: '#f97316' },
     { severity: 'Medium', count: counts.MEDIUM, color: '#eab308' },
-    { severity: 'Low', count: counts.LOW, color: '#3b82f6' },
-    { severity: 'Info', count: counts.INFO, color: '#6b7280' },
+    { severity: 'Low', count: counts.LOW, color: '#71717a' },
+    { severity: 'Info', count: counts.INFO, color: '#a1a1aa' },
   ];
 
   return (
-    <div className="clean-card p-6 flex flex-col justify-between">
+    <div className="clean-card p-6 flex flex-col justify-between shadow-sm">
       <div>
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           Findings by Severity Spectrum
         </h3>
-        <p className="text-xs text-slate-500 mt-0.5">Prioritized risk triage count</p>
+        <p className="text-xs text-muted-foreground mt-0.5">Prioritized risk triage count</p>
       </div>
 
       <div className="w-full h-56 mt-4">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <XAxis dataKey="severity" stroke="#6b7280" tick={{ fontSize: 11 }} />
-            <YAxis stroke="#6b7280" tick={{ fontSize: 11 }} />
+            <XAxis dataKey="severity" stroke="var(--muted-foreground)" tick={{ fontSize: 11 }} />
+            <YAxis stroke="var(--muted-foreground)" tick={{ fontSize: 11 }} />
             <Tooltip
-              contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '8px', color: '#fff' }}
-              cursor={{ fill: 'rgba(255, 255, 255, 0.03)' }}
+              contentStyle={{
+                backgroundColor: 'var(--card)',
+                borderColor: 'var(--border)',
+                borderRadius: '8px',
+                color: 'var(--foreground)',
+              }}
+              cursor={{ fill: 'var(--muted)' }}
             />
             <Bar dataKey="count" radius={[4, 4, 0, 0]}>
               {data.map((entry, index) => (

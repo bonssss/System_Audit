@@ -10,46 +10,51 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: '#090d16',
-        foreground: '#f8fafc',
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
         card: {
-          DEFAULT: '#0f172a',
-          foreground: '#f8fafc',
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
         },
         popover: {
-          DEFAULT: '#0f172a',
-          foreground: '#f8fafc',
+          DEFAULT: 'var(--popover)',
+          foreground: 'var(--popover-foreground)',
         },
         primary: {
-          DEFAULT: '#6366f1',
-          foreground: '#ffffff',
-          dark: '#4f46e5',
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
+          hover: 'var(--primary-hover)',
         },
         secondary: {
-          DEFAULT: '#1e293b',
-          foreground: '#f8fafc',
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
         },
         muted: {
-          DEFAULT: '#1e293b',
-          foreground: '#94a3b8',
+          DEFAULT: 'var(--muted)',
+          foreground: 'var(--muted-foreground)',
         },
         accent: {
-          DEFAULT: '#312e81',
-          foreground: '#e0e7ff',
+          DEFAULT: 'var(--accent)',
+          foreground: 'var(--accent-foreground)',
         },
         destructive: {
-          DEFAULT: '#ef4444',
-          foreground: '#ffffff',
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
         },
-        border: '#1e293b',
-        input: '#1e293b',
-        ring: '#6366f1',
+        border: 'var(--border)',
+        'border-subtle': 'var(--border-subtle)',
+        input: 'var(--input)',
+        ring: 'var(--ring)',
+        surface: {
+          DEFAULT: 'var(--surface)',
+          hover: 'var(--surface-hover)',
+        },
         severity: {
           critical: '#ef4444',
           high: '#f97316',
           medium: '#eab308',
           low: '#3b82f6',
-          info: '#8b5cf6',
+          info: '#64748b',
         },
       },
       borderRadius: {

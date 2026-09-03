@@ -77,21 +77,21 @@ export default function SandboxScannerPage() {
 
       <div className="px-8 pt-8 space-y-6 max-w-7xl">
         {/* Top Controls */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0f172a] border border-[#1e293b] p-4 rounded-2xl">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-surface border border-border p-4 rounded-2xl shadow-sm transition-colors">
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <span className="text-xs font-semibold text-slate-400">File Name / Path:</span>
+            <span className="text-xs font-semibold text-muted-foreground">File Name / Path:</span>
             <input
               type="text"
               value={fileName}
               onChange={(e) => setFileName(e.target.value)}
-              className="bg-[#161f36] border border-[#223050] text-slate-200 text-xs px-3 py-1.5 rounded-lg font-mono focus:outline-none focus:border-indigo-500"
+              className="bg-background border border-border text-foreground text-xs px-3 py-1.5 rounded-lg font-mono focus:outline-none focus:border-foreground transition-colors"
             />
           </div>
 
           <button
             onClick={handleRunScan}
             disabled={isScanning}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white text-xs font-bold px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-indigo-600/30"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-foreground text-background hover:opacity-90 disabled:opacity-50 text-xs font-bold px-6 py-2.5 rounded-xl transition-all shadow-sm"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>{isScanning ? 'Executing Scanner Pipeline...' : 'Run Real-time Scan'}</span>
@@ -101,10 +101,10 @@ export default function SandboxScannerPage() {
         {/* Code Editor & Live Findings Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left: Code Input Area */}
-          <div className="bg-[#0b0f1a] border border-[#1e293b] rounded-2xl overflow-hidden shadow-xl flex flex-col h-[560px]">
-            <div className="bg-[#0f172a] border-b border-[#1e293b] px-4 py-2.5 flex items-center justify-between text-xs text-slate-400">
-              <span className="font-mono font-semibold text-slate-300 flex items-center gap-1.5">
-                <FileCode className="w-4 h-4 text-indigo-400" />
+          <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col h-[560px] transition-colors">
+            <div className="bg-muted/40 border-b border-border px-4 py-2.5 flex items-center justify-between text-xs text-muted-foreground">
+              <span className="font-mono font-semibold text-foreground flex items-center gap-1.5">
+                <FileCode className="w-4 h-4 text-foreground" />
                 {fileName}
               </span>
               <span>{code.split('\n').length} lines</span>
@@ -114,20 +114,20 @@ export default function SandboxScannerPage() {
               value={code}
               onChange={(e) => setCode(e.target.value)}
               placeholder="Paste code snippet here..."
-              className="flex-1 w-full bg-[#060911] text-slate-200 font-mono text-xs p-4 focus:outline-none resize-none leading-relaxed"
+              className="flex-1 w-full bg-background text-foreground font-mono text-xs p-4 focus:outline-none resize-none leading-relaxed transition-colors"
               spellCheck={false}
             />
           </div>
 
           {/* Right: Live Findings List */}
-          <div className="bg-[#0f172a] border border-[#1e293b] rounded-2xl overflow-hidden shadow-xl flex flex-col h-[560px]">
-            <div className="bg-[#0b101d] border-b border-[#1e293b] px-5 py-3 flex items-center justify-between">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                <ShieldAlert className="w-4 h-4 text-indigo-400" />
+          <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col h-[560px] transition-colors">
+            <div className="bg-muted/40 border-b border-border px-5 py-3 flex items-center justify-between">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-2">
+                <ShieldAlert className="w-4 h-4 text-foreground" />
                 <span>Detected Findings ({issues.length})</span>
               </h3>
               {issues.length > 0 && (
-                <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold border border-red-500/30">
+                <span className="text-[10px] bg-rose-500/10 text-rose-600 dark:text-rose-400 px-2 py-0.5 rounded font-bold border border-rose-500/30">
                   {issues.filter((i) => i.severity === 'CRITICAL' || i.severity === 'HIGH').length} High/Crit
                 </span>
               )}
@@ -135,8 +135,8 @@ export default function SandboxScannerPage() {
 
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {issues.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-500 space-y-2">
-                  <Sparkles className="w-8 h-8 text-indigo-500/50" />
+                <div className="h-full flex flex-col items-center justify-center text-center p-6 text-muted-foreground space-y-2">
+                  <Sparkles className="w-8 h-8 text-muted-foreground" />
                   <p className="text-xs">Click &quot;Run Real-time Scan&quot; to parse code and identify risks.</p>
                 </div>
               ) : (
@@ -146,26 +146,26 @@ export default function SandboxScannerPage() {
                   return (
                     <div
                       key={iss.id}
-                      className="bg-[#141d33] border border-[#1e2d4d] hover:border-indigo-500/50 rounded-xl p-4 transition-all space-y-2"
+                      className="bg-background border border-border hover:border-foreground rounded-xl p-4 transition-all space-y-2"
                     >
                       <div className="flex items-center justify-between">
                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${sevCol.badge}`}>
                           {iss.severity}
                         </span>
-                        <span className="text-[10px] text-slate-400 font-mono">
+                        <span className="text-[10px] text-muted-foreground font-mono">
                           Line {iss.location.startLine}
                         </span>
                       </div>
 
-                      <h4 className="text-xs font-bold text-white leading-snug">{iss.title}</h4>
-                      <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
+                      <h4 className="text-xs font-bold text-foreground leading-snug">{iss.title}</h4>
+                      <p className="text-[11px] text-muted-foreground line-clamp-2 leading-relaxed">
                         {iss.description}
                       </p>
 
-                      <div className="pt-2 border-t border-[#1e2d4d] flex justify-end">
+                      <div className="pt-2 border-t border-border flex justify-end">
                         <button
                           onClick={() => setActiveIssue(iss)}
-                          className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-colors shadow-sm"
+                          className="flex items-center gap-1.5 bg-foreground text-background hover:opacity-90 text-xs font-bold px-3 py-1.5 rounded-lg transition-all shadow-sm"
                         >
                           <Sparkles className="w-3.5 h-3.5" />
                           <span>Explain & Fix</span>
