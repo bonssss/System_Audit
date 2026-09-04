@@ -9,6 +9,10 @@ import { ProjectFileEntry } from '@ai-scanner/scanner-core';
 export async function POST(req: NextRequest) {
   try {
     const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'Unauthorized: Please log in to run scans' }, { status: 401 });
+    }
+
     const contentType = req.headers.get('content-type') || '';
 
     let projectId = '';
@@ -31,13 +35,24 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ success: false, error: 'ZIP archive contains no supported code files' }, { status: 400 });
       }
 
-      // If projectId not provided, create project
-      if (!projectId) {
+      // If projectId provided, verify ownership
+      if (projectId) {
+        const existingProj = await db.project.findUnique({
+          where: { id: projectId },
+          select: { userId: true },
+        });
+        if (!existingProj) {
+          return NextResponse.json({ success: false, error: 'Project not found' }, { status: 404 });
+        }
+        if (user.role !== 'ADMIN' && existingProj.userId && existingProj.userId !== user.id) {
+          return NextResponse.json({ success: false, error: 'Forbidden: Access denied to this project' }, { status: 403 });
+        }
+      } else {
         const proj = await db.project.create({
           data: {
             name: projectName,
             sourceType: 'ZIP_UPLOAD',
-            userId: user?.id || null,
+            userId: user.id,
           },
         });
         projectId = proj.id;
@@ -48,6 +63,19 @@ export async function POST(req: NextRequest) {
       const gitUrl = body.gitUrl;
       const projectName = body.projectName;
       const sampleId = body.sampleId;
+
+      if (projectId) {
+        const existingProj = await db.project.findUnique({
+          where: { id: projectId },
+          select: { userId: true },
+        });
+        if (!existingProj) {
+          return NextResponse.json({ success: false, error: 'Project not found' }, { status: 404 });
+        }
+        if (user.role !== 'ADMIN' && existingProj.userId && existingProj.userId !== user.id) {
+          return NextResponse.json({ success: false, error: 'Forbidden: Access denied to this project' }, { status: 403 });
+        }
+      }
 
       if (gitUrl) {
         // Handle Git repository URL
@@ -65,7 +93,7 @@ export async function POST(req: NextRequest) {
               repositoryUrl: gitUrl,
               defaultBranch: gitResult.defaultBranch,
               sourceType: 'GITHUB',
-              userId: user?.id || null,
+              userId: user.id,
             },
           });
           projectId = proj.id;
@@ -82,7 +110,7 @@ export async function POST(req: NextRequest) {
               name: sample.name,
               description: sample.description,
               sourceType: 'LOCAL',
-              userId: user?.id || null,
+              userId: user.id,
             },
           });
           projectId = proj.id;
@@ -96,7 +124,7 @@ export async function POST(req: NextRequest) {
             data: {
               name: projectName || 'AST Sandbox Code',
               sourceType: 'LOCAL',
-              userId: user?.id || null,
+              userId: user.id,
             },
           });
           projectId = proj.id;
@@ -129,3 +157,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: err.message || 'Scan execution failed' }, { status: 500 });
   }
 }
+

@@ -1,16 +1,35 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { getCurrentUser } from '@/lib/auth';
 
 export async function GET() {
   try {
-    const totalProjects = await db.project.count();
-    const totalScans = await db.scan.count();
-    const totalIssues = await db.issue.count();
-    const criticalIssues = await db.issue.count({ where: { severity: 'CRITICAL' } });
-    const highIssues = await db.issue.count({ where: { severity: 'HIGH' } });
-    const mediumIssues = await db.issue.count({ where: { severity: 'MEDIUM' } });
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const projectFilter = user.role === 'ADMIN' ? {} : { userId: user.id };
+
+    const totalProjects = await db.project.count({ where: projectFilter });
+    const totalScans = await db.scan.count({
+      where: { project: projectFilter },
+    });
+    const totalIssues = await db.issue.count({
+      where: { scan: { project: projectFilter } },
+    });
+    const criticalIssues = await db.issue.count({
+      where: { severity: 'CRITICAL', scan: { project: projectFilter } },
+    });
+    const highIssues = await db.issue.count({
+      where: { severity: 'HIGH', scan: { project: projectFilter } },
+    });
+    const mediumIssues = await db.issue.count({
+      where: { severity: 'MEDIUM', scan: { project: projectFilter } },
+    });
 
     const recentScans = await db.scan.findMany({
+      where: { project: projectFilter },
       take: 5,
       orderBy: { createdAt: 'desc' },
       include: {
@@ -20,7 +39,7 @@ export async function GET() {
     });
 
     const completedScans = await db.scan.findMany({
-      where: { status: 'COMPLETED' },
+      where: { status: 'COMPLETED', project: projectFilter },
       select: {
         overallScore: true,
         securityScore: true,

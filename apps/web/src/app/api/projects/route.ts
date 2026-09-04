@@ -1,10 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { CreateProjectSchema } from '@ai-scanner/shared';
+import { getCurrentUser } from '@/lib/auth';
 
 export async function GET() {
   try {
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const where = user.role === 'ADMIN' ? {} : { userId: user.id };
+
     const projects = await db.project.findMany({
+      where,
       orderBy: { updatedAt: 'desc' },
       include: {
         scans: {
@@ -51,6 +60,11 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
     const body = await req.json();
     const validated = CreateProjectSchema.parse(body);
 
@@ -61,6 +75,7 @@ export async function POST(req: NextRequest) {
         repositoryUrl: validated.repositoryUrl || null,
         defaultBranch: validated.branch,
         sourceType: validated.sourceType,
+        userId: user.id,
       },
     });
 
@@ -69,3 +84,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: err.message }, { status: 400 });
   }
 }
+

@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { getCurrentUser } from '@/lib/auth';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { id } = await params;
     const scan = await db.scan.findUnique({
       where: { id },
@@ -25,6 +31,11 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
     if (!scan) {
       return NextResponse.json({ success: false, error: 'Scan not found' }, { status: 404 });
+    }
+
+    // Verify ownership
+    if (user.role !== 'ADMIN' && scan.project.userId && scan.project.userId !== user.id) {
+      return NextResponse.json({ success: false, error: 'Forbidden: Access denied to this scan' }, { status: 403 });
     }
 
     // Parse remediationJson

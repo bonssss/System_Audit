@@ -1,14 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { getCurrentUser } from '@/lib/auth';
 
 export async function GET(req: NextRequest) {
   try {
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
     const scanId = req.nextUrl.searchParams.get('scanId');
     const severity = req.nextUrl.searchParams.get('severity');
     const category = req.nextUrl.searchParams.get('category');
     const status = req.nextUrl.searchParams.get('status');
 
-    const where: any = {};
+    const projectFilter = user.role === 'ADMIN' ? {} : { userId: user.id };
+    const where: any = {
+      scan: {
+        project: projectFilter,
+      },
+    };
+
     if (scanId) where.scanId = scanId;
     if (severity && severity !== 'ALL') where.severity = severity;
     if (category && category !== 'ALL') where.category = category;
