@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     const category = req.nextUrl.searchParams.get('category');
     const status = req.nextUrl.searchParams.get('status');
 
-    const projectFilter = user.role === 'ADMIN' ? {} : { userId: user.id };
+    const projectFilter = { userId: user.id };
     const where: any = {
       scan: {
         project: projectFilter,

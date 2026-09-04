@@ -45,7 +45,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 
     // Verify ownership
-    if (user.role !== 'ADMIN' && scan.project.userId && scan.project.userId !== user.id) {
+    if (scan.project.userId !== user.id) {
       return NextResponse.json({ success: false, error: 'Forbidden: Access denied to this scan' }, { status: 403 });
     }
 

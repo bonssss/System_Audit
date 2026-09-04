@@ -10,7 +10,7 @@ export async function GET() {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
-    const where = user.role === 'ADMIN' ? {} : { userId: user.id };
+    const where = { userId: user.id };
 
     const projects = await db.project.findMany({
       where,

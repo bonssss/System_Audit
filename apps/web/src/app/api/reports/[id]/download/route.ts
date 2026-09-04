@@ -47,7 +47,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         return NextResponse.json({ success: false, error: 'Scan or Report not found' }, { status: 404 });
       }
 
-      if (user.role !== 'ADMIN' && scan.project.userId && scan.project.userId !== user.id) {
+      if (scan.project.userId !== user.id) {
         return NextResponse.json({ success: false, error: 'Forbidden: Access denied to this report' }, { status: 403 });
       }
 
@@ -105,7 +105,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         content = generateInteractiveHtmlReport(formattedScanResult, projectName);
       }
     } else {
-      if (user.role !== 'ADMIN' && report?.scan.project.userId && report?.scan.project.userId !== user.id) {
+      if (report?.scan.project.userId !== user.id) {
         return NextResponse.json({ success: false, error: 'Forbidden: Access denied to this report' }, { status: 403 });
       }
     }

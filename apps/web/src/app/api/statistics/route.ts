@@ -9,7 +9,7 @@ export async function GET() {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
-    const projectFilter = user.role === 'ADMIN' ? {} : { userId: user.id };
+    const projectFilter = { userId: user.id };
 
     const totalProjects = await db.project.count({ where: projectFilter });
     const totalScans = await db.scan.count({
