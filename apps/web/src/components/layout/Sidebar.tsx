@@ -32,6 +32,11 @@ const MAIN_NAV: NavItem[] = [
 export function Sidebar() {
   const pathname = usePathname();
 
+  // Do not render sidebar on landing page, login, or register pages
+  if (pathname === '/' || pathname === '/login' || pathname === '/register') {
+    return null;
+  }
+
   return (
     <aside className="w-64 bg-surface border-r border-border flex flex-col h-screen sticky top-0 select-none z-30 transition-colors duration-200">
       {/* Brand Header */}
