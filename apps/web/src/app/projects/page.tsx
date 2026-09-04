@@ -106,9 +106,11 @@ export default function ProjectsPage() {
                     </span>
                   </div>
 
-                  <h3 className="text-base font-bold text-foreground group-hover:underline transition-colors font-mono">
-                    {p.name}
-                  </h3>
+                  <Link href={`/projects/${p.id}`}>
+                    <h3 className="text-base font-bold text-foreground hover:underline transition-colors font-mono">
+                      {p.name}
+                    </h3>
+                  </Link>
                   <p className="text-xs text-muted-foreground mt-1 line-clamp-2 leading-relaxed">
                     {p.description || 'Enterprise codebase'}
                   </p>
@@ -130,8 +132,9 @@ export default function ProjectsPage() {
                     </button>
 
                     <Link
-                      href={`/scans/${p.id}`}
+                      href={`/projects/${p.id}`}
                       className="w-8 h-8 rounded-lg bg-muted text-foreground hover:bg-foreground hover:text-background border border-border flex items-center justify-center transition-all shadow-sm"
+                      title="Inspect Project"
                     >
                       <ArrowUpRight className="w-4 h-4" />
                     </Link>

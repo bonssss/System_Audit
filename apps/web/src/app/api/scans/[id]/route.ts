@@ -10,24 +10,35 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 
     const { id } = await params;
-    const scan = await db.scan.findUnique({
-      where: { id },
-      include: {
-        project: true,
-        statistics: true,
-        languages: {
-          orderBy: { linesOfCode: 'desc' },
-        },
-        dependencies: true,
-        issues: {
-          orderBy: [{ severity: 'asc' }, { createdAt: 'desc' }],
-        },
-        files: true,
-        reports: {
-          select: { id: true, format: true, createdAt: true },
-        },
+    const scanIncludes = {
+      project: true,
+      statistics: true,
+      languages: {
+        orderBy: { linesOfCode: 'desc' as const },
       },
+      dependencies: true,
+      issues: {
+        orderBy: [{ severity: 'asc' as const }, { createdAt: 'desc' as const }],
+      },
+      files: true,
+      reports: {
+        select: { id: true, format: true, createdAt: true },
+      },
+    };
+
+    let scan = await db.scan.findUnique({
+      where: { id },
+      include: scanIncludes,
     });
+
+    // If not found by scan ID, check if id is a project ID and load its latest scan
+    if (!scan) {
+      scan = await db.scan.findFirst({
+        where: { projectId: id },
+        orderBy: { createdAt: 'desc' },
+        include: scanIncludes,
+      });
+    }
 
     if (!scan) {
       return NextResponse.json({ success: false, error: 'Scan not found' }, { status: 404 });

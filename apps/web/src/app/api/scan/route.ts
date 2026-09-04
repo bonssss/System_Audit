@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
       const projectName = body.projectName;
       const sampleId = body.sampleId;
 
-      if (projectId) {
+      if (projectId && projectId !== 'sandbox') {
         const existingProj = await db.project.findUnique({
           where: { id: projectId },
           select: { userId: true },
@@ -75,6 +75,8 @@ export async function POST(req: NextRequest) {
         if (user.role !== 'ADMIN' && existingProj.userId && existingProj.userId !== user.id) {
           return NextResponse.json({ success: false, error: 'Forbidden: Access denied to this project' }, { status: 403 });
         }
+      } else if (projectId === 'sandbox') {
+        projectId = '';
       }
 
       if (gitUrl) {
