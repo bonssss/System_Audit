@@ -34,10 +34,9 @@ function LoginForm() {
       }
 
       await login(data.data);
-      router.push(redirectTarget);
+      window.location.href = redirectTarget;
     } catch (err: any) {
       setErrorMsg(err.message || 'Invalid credentials');
-    } finally {
       setIsLoading(false);
     }
   };

@@ -34,10 +34,9 @@ export default function RegisterPage() {
       }
 
       await login(data.data);
-      router.push('/dashboard');
+      window.location.href = '/dashboard';
     } catch (err: any) {
       setErrorMsg(err.message || 'Registration failed');
-    } finally {
       setIsLoading(false);
     }
   };
