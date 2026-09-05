@@ -44,25 +44,25 @@ export default function LandingPage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
           {/* Announcement Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-border shadow-sm text-xs text-muted-foreground font-medium animate-in fade-in slide-in-from-top-4 duration-500">
-            <span className="flex h-2 w-2 relative">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-border shadow-sm text-xs text-muted-foreground font-medium animate-in fade-in slide-in-from-top-4 duration-500 max-w-full flex-wrap justify-center">
+            <span className="flex h-2 w-2 relative flex-shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <span className="font-semibold text-foreground">System Audit v2.4 Released</span>
-            <span className="text-muted-foreground/60">•</span>
-            <span className="font-mono text-[11px]">14 AST Engines + Unified Diff AI</span>
+            <span className="text-muted-foreground/60 hidden sm:inline">•</span>
+            <span className="font-mono text-[11px] hidden sm:inline">14 AST Engines + Unified Diff AI</span>
           </div>
 
           {/* Main Hero Headline */}
           <div className="space-y-4 max-w-4xl mx-auto">
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.08]">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.12]">
               Autonomous Code Audits.{' '}
-              <span className="bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-500 dark:from-white dark:via-zinc-300 dark:to-zinc-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-500 dark:from-white dark:via-zinc-300 dark:to-zinc-500 bg-clip-text text-transparent block sm:inline">
                 Instant AI Patches.
               </span>
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Enterprise-grade static analysis combining 14 specialized AST engines—from Shannon entropy secrets and OWASP Top 10 to Docker/K8s hardening—with autonomous unified diff remediations.
             </p>
           </div>

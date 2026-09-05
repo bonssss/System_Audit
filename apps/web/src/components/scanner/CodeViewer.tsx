@@ -152,10 +152,10 @@ export function CodeViewer({
         </div>
       </div>
 
-      {/* Split Pane: Explorer on left, IDE on right */}
-      <div className="flex-1 flex overflow-hidden">
+      {/* Split Pane: Explorer on left (top on mobile), IDE on right (bottom on mobile) */}
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-h-0">
         {/* Left File Tree Sidebar */}
-        <div className="w-80 bg-surface border-r border-border overflow-y-auto p-3.5 space-y-2 flex flex-col">
+        <div className="w-full md:w-80 max-h-44 md:max-h-full bg-surface border-b md:border-b-0 md:border-r border-border overflow-y-auto p-3.5 space-y-2 flex flex-col flex-shrink-0">
           {/* File Filter */}
           <div className="relative">
             <Search className="w-3.5 h-3.5 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />

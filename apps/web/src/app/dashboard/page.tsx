@@ -71,7 +71,7 @@ export default function DashboardPage() {
         onOpenUpload={() => setIsUploadOpen(true)}
       />
 
-      <div className="p-8 space-y-6 max-w-7xl">
+      <div className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl">
         {/* Banner */}
         <div className="bg-surface border border-border rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm transition-colors">
           <div className="flex items-start gap-4">

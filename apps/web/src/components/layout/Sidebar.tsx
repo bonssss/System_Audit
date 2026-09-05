@@ -9,10 +9,10 @@ import {
   FolderGit2,
   Settings,
   Terminal,
-  Activity,
-  Layers,
+  X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useSidebar } from '@/lib/sidebar-context';
 
 interface NavItem {
   label: string;
@@ -31,28 +31,40 @@ const MAIN_NAV: NavItem[] = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { isOpen, close } = useSidebar();
 
   // Do not render sidebar on landing page, login, or register pages
   if (pathname === '/' || pathname === '/login' || pathname === '/register') {
     return null;
   }
 
-  return (
-    <aside className="w-64 bg-surface border-r border-border flex flex-col h-screen sticky top-0 select-none z-30 transition-colors duration-200">
+  const sidebarContent = (
+    <div className="flex flex-col h-full bg-surface border-r border-border select-none transition-colors duration-200">
       {/* Brand Header */}
-      <div className="h-16 flex items-center px-6 border-b border-border gap-3">
-        <div className="w-8 h-8 rounded-lg bg-foreground text-background flex items-center justify-center font-bold shadow-sm">
-          <ShieldAlert className="w-4 h-4" />
-        </div>
-        <div>
-          <div className="font-bold text-sm tracking-tight text-foreground flex items-center gap-1.5">
-            <span>System Audit</span>
-            <span className="text-[9px] bg-foreground/10 text-foreground font-semibold px-1.5 py-0.5 rounded border border-border">
-              PRO
-            </span>
+      <div className="h-16 flex items-center justify-between px-6 border-b border-border">
+        <Link href="/dashboard" onClick={close} className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-foreground text-background flex items-center justify-center font-bold shadow-sm">
+            <ShieldAlert className="w-4 h-4" />
           </div>
-          <div className="text-[10px] text-muted-foreground">Security Platform</div>
-        </div>
+          <div>
+            <div className="font-bold text-sm tracking-tight text-foreground flex items-center gap-1.5">
+              <span>System Audit</span>
+              <span className="text-[9px] bg-foreground/10 text-foreground font-semibold px-1.5 py-0.5 rounded border border-border">
+                PRO
+              </span>
+            </div>
+            <div className="text-[10px] text-muted-foreground">Security Platform</div>
+          </div>
+        </Link>
+
+        {/* Mobile Close Button */}
+        <button
+          onClick={close}
+          className="md:hidden p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-surface-hover transition-colors"
+          aria-label="Close menu"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Navigation Links */}
@@ -69,6 +81,7 @@ export function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={close}
               className={cn(
                 'flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150',
                 isActive
@@ -111,6 +124,31 @@ export function Sidebar() {
           </div>
         </div>
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Desktop Persistent Sidebar */}
+      <aside className="hidden md:flex w-64 flex-col h-screen sticky top-0 z-30 flex-shrink-0">
+        {sidebarContent}
+      </aside>
+
+      {/* Mobile Slide-over Drawer */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50 md:hidden flex animate-in fade-in duration-200">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
+            onClick={close}
+          />
+
+          {/* Drawer Body */}
+          <div className="relative w-72 max-w-[80vw] h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-200">
+            {sidebarContent}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

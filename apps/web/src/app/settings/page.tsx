@@ -26,7 +26,7 @@ export default function SettingsPage() {
         subtitle="Manage theme appearance, AI engine parameters, API credentials, and cloud storage providers"
       />
 
-      <div className="px-8 pt-8 space-y-8 max-w-4xl">
+      <div className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-8 max-w-4xl">
         <form onSubmit={handleSave} className="space-y-6">
           {/* Appearance & Theme Customization */}
           <div className="bg-surface border border-border rounded-2xl p-6 shadow-sm space-y-4 transition-colors">

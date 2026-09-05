@@ -32,7 +32,7 @@ export default function RulesPage() {
         subtitle="Explore built-in OWASP Top 10, CWE vulnerability rules, and automated remediations"
       />
 
-      <div className="px-8 pt-8 space-y-6 max-w-7xl">
+      <div className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-6 max-w-7xl">
         {/* Search & Filter Toolbar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-surface border border-border p-4 rounded-2xl shadow-sm transition-colors">
           <div className="relative w-full sm:w-96">

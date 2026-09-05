@@ -66,25 +66,25 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
         onOpenUpload={() => setIsUploadOpen(true)}
       />
 
-      <div className="px-8 pt-8 space-y-6 max-w-7xl">
+      <div className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-6 max-w-7xl">
         {/* Header Breadcrumb */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Link
               href="/projects"
-              className="p-2 rounded-xl bg-surface border border-border text-muted-foreground hover:text-foreground transition-colors"
+              className="p-2 rounded-xl bg-surface border border-border text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
             >
               <ArrowLeft className="w-4 h-4" />
             </Link>
-            <div>
-              <div className="text-xs text-muted-foreground font-mono">Projects / {project.name}</div>
-              <h2 className="text-xl font-extrabold text-foreground tracking-tight">{project.name}</h2>
+            <div className="min-w-0">
+              <div className="text-xs text-muted-foreground font-mono truncate">Projects / {project.name}</div>
+              <h2 className="text-lg sm:text-xl font-extrabold text-foreground tracking-tight truncate">{project.name}</h2>
             </div>
           </div>
 
           <button
             onClick={() => setIsUploadOpen(true)}
-            className="flex items-center gap-2 bg-foreground text-background hover:opacity-90 text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-sm"
+            className="flex items-center justify-center gap-2 bg-foreground text-background hover:opacity-90 text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-sm flex-shrink-0 w-full sm:w-auto"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>Rescan Project</span>

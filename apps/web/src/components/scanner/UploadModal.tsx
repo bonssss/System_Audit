@@ -66,7 +66,8 @@ export function UploadModal({ isOpen, onClose, onScanStarted }: UploadModalProps
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
-      <div className="bg-surface border border-border rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col transition-colors">
+      <div className="fixed inset-0" onClick={onClose} />
+      <div className="relative bg-surface border border-border rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col transition-colors z-10">
         {/* Modal Header */}
         <div className="p-5 border-b border-border flex items-center justify-between">
           <div>

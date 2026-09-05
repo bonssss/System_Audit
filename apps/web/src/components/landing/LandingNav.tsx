@@ -28,18 +28,18 @@ export function LandingNav() {
     <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-background/80 border-b border-border/60 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-xl bg-foreground text-background flex items-center justify-center font-bold shadow-md shadow-foreground/10 group-hover:scale-105 transition-transform duration-200">
-            <ShieldAlert className="w-5 h-5" />
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group min-w-0">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-foreground text-background flex items-center justify-center font-bold shadow-md shadow-foreground/10 group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+            <ShieldAlert className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
-          <div className="flex flex-col">
-            <div className="font-bold text-sm tracking-tight text-foreground flex items-center gap-2">
+          <div className="flex flex-col min-w-0">
+            <div className="font-bold text-sm tracking-tight text-foreground flex items-center gap-1.5 truncate">
               <span>System Audit</span>
-              <span className="text-[10px] bg-foreground/10 text-foreground font-semibold px-2 py-0.5 rounded-full border border-border">
+              <span className="hidden sm:inline-block text-[10px] bg-foreground/10 text-foreground font-semibold px-2 py-0.5 rounded-full border border-border">
                 v2.4 PRO
               </span>
             </div>
-            <span className="text-[10px] text-muted-foreground tracking-wider font-mono">
+            <span className="hidden sm:block text-[10px] text-muted-foreground tracking-wider font-mono">
               ENTERPRISE SAST & AI
             </span>
           </div>
@@ -70,12 +70,12 @@ export function LandingNav() {
         </nav>
 
         {/* Right Action Buttons */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle color theme"
-            className="p-2 rounded-lg bg-surface hover:bg-surface-hover text-muted-foreground hover:text-foreground border border-border transition-colors duration-150"
+            className="p-2 rounded-lg bg-surface hover:bg-surface-hover text-muted-foreground hover:text-foreground border border-border transition-colors duration-150 flex-shrink-0"
           >
             {resolvedTheme === 'dark' ? (
               <Sun className="w-4 h-4 text-amber-400" />
@@ -87,7 +87,7 @@ export function LandingNav() {
           {isAuthenticated ? (
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-foreground text-background hover:opacity-90 transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-foreground text-background hover:opacity-90 transition-all shadow-sm flex-shrink-0"
             >
               <span>Dashboard</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -102,7 +102,7 @@ export function LandingNav() {
               </Link>
               <Link
                 href="/scanner"
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-foreground text-background hover:opacity-90 transition-all shadow-sm group"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-foreground text-background hover:opacity-90 transition-all shadow-sm group"
               >
                 <Terminal className="w-3.5 h-3.5 group-hover:rotate-6 transition-transform" />
                 <span>Launch Scanner</span>
@@ -114,7 +114,7 @@ export function LandingNav() {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Open mobile menu"
-            className="md:hidden p-2 rounded-lg bg-surface text-muted-foreground hover:text-foreground border border-border"
+            className="md:hidden p-2 rounded-lg bg-surface text-muted-foreground hover:text-foreground border border-border flex-shrink-0"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>

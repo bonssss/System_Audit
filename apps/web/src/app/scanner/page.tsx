@@ -75,16 +75,16 @@ export default function SandboxScannerPage() {
         subtitle="Paste arbitrary code snippets to test static analysis and instant AI remediation"
       />
 
-      <div className="px-8 pt-8 space-y-6 max-w-7xl">
+      <div className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-6 max-w-7xl">
         {/* Top Controls */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-surface border border-border p-4 rounded-2xl shadow-sm transition-colors">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-surface border border-border p-4 rounded-2xl shadow-sm transition-colors">
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <span className="text-xs font-semibold text-muted-foreground">File Name / Path:</span>
+            <span className="text-xs font-semibold text-muted-foreground whitespace-nowrap">File Name / Path:</span>
             <input
               type="text"
               value={fileName}
               onChange={(e) => setFileName(e.target.value)}
-              className="bg-background border border-border text-foreground text-xs px-3 py-1.5 rounded-lg font-mono focus:outline-none focus:border-foreground transition-colors"
+              className="bg-background border border-border text-foreground text-xs px-3 py-1.5 rounded-lg font-mono focus:outline-none focus:border-foreground transition-colors flex-1 sm:w-64"
             />
           </div>
 
@@ -101,13 +101,13 @@ export default function SandboxScannerPage() {
         {/* Code Editor & Live Findings Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left: Code Input Area */}
-          <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col h-[560px] transition-colors">
+          <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col h-[380px] sm:h-[460px] lg:h-[560px] transition-colors">
             <div className="bg-muted/40 border-b border-border px-4 py-2.5 flex items-center justify-between text-xs text-muted-foreground">
-              <span className="font-mono font-semibold text-foreground flex items-center gap-1.5">
-                <FileCode className="w-4 h-4 text-foreground" />
-                {fileName}
+              <span className="font-mono font-semibold text-foreground flex items-center gap-1.5 truncate">
+                <FileCode className="w-4 h-4 text-foreground flex-shrink-0" />
+                <span className="truncate">{fileName}</span>
               </span>
-              <span>{code.split('\n').length} lines</span>
+              <span className="flex-shrink-0">{code.split('\n').length} lines</span>
             </div>
 
             <textarea
@@ -120,7 +120,7 @@ export default function SandboxScannerPage() {
           </div>
 
           {/* Right: Live Findings List */}
-          <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col h-[560px] transition-colors">
+          <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col h-[380px] sm:h-[460px] lg:h-[560px] transition-colors">
             <div className="bg-muted/40 border-b border-border px-5 py-3 flex items-center justify-between">
               <h3 className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-2">
                 <ShieldAlert className="w-4 h-4 text-foreground" />

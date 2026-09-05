@@ -4,6 +4,8 @@ import { Sidebar } from '@/components/layout/Sidebar';
 import { AuthProvider } from '@/lib/auth-context';
 import { ThemeProvider } from '@/lib/theme-context';
 
+import { SidebarProvider } from '@/lib/sidebar-context';
+
 export const metadata: Metadata = {
   title: 'System Audit - Enterprise Code Security Platform',
   description: 'AI-powered project scanner and system auditing security platform.',
@@ -40,10 +42,12 @@ export default function RootLayout({
       <body className="bg-background text-foreground min-h-screen flex antialiased selection:bg-zinc-800 selection:text-white dark:selection:bg-zinc-200 dark:selection:text-black">
         <ThemeProvider>
           <AuthProvider>
-            <Sidebar />
-            <main className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-transparent">
-              {children}
-            </main>
+            <SidebarProvider>
+              <Sidebar />
+              <main className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-transparent">
+                {children}
+              </main>
+            </SidebarProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

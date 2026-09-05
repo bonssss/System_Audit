@@ -54,9 +54,10 @@ export function AIRemediationDrawer({ issue, onClose }: AIRemediationDrawerProps
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm transition-opacity">
-      <div className="w-full max-w-2xl bg-surface border-l border-border h-full shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-right duration-300 transition-colors">
+      <div className="fixed inset-0" onClick={onClose} />
+      <div className="relative w-full sm:max-w-xl md:max-w-2xl bg-surface border-l border-border h-full shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-right duration-300 transition-colors z-10">
         {/* Drawer Header */}
-        <div className="p-6 border-b border-border flex items-start justify-between bg-muted/30">
+        <div className="p-4 sm:p-6 border-b border-border flex items-start justify-between bg-muted/30">
           <div className="flex items-start gap-4">
             <div className="p-3 rounded-2xl bg-foreground text-background border border-border">
               <Sparkles className="w-6 h-6" />

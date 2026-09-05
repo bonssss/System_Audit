@@ -63,10 +63,10 @@ export default function ProjectsPage() {
         onOpenUpload={() => setIsUploadOpen(true)}
       />
 
-      <div className="px-8 pt-8 space-y-6 max-w-7xl">
+      <div className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-6 max-w-7xl">
         {/* Toolbar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="relative w-72">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          <div className="relative w-full sm:w-72">
             <input
               type="text"
               value={search}
@@ -79,7 +79,7 @@ export default function ProjectsPage() {
 
           <button
             onClick={() => setIsUploadOpen(true)}
-            className="flex items-center gap-1.5 bg-foreground text-background hover:opacity-90 text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm transition-all"
+            className="w-full sm:w-auto flex items-center justify-center gap-1.5 bg-foreground text-background hover:opacity-90 text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm transition-all"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>INGEST REPOSITORY</span>
