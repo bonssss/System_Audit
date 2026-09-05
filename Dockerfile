@@ -15,7 +15,8 @@ COPY packages/scanner-core/package.json ./packages/scanner-core/
 COPY packages/ai/package.json ./packages/ai/
 COPY packages/reports/package.json ./packages/reports/
 
-RUN npm install
+# Install dependencies with --ignore-scripts to avoid postinstall before schema is copied
+RUN npm install --ignore-scripts
 
 # Build packages and Next.js app
 FROM base AS builder
