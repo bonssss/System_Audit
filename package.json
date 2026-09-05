@@ -11,6 +11,7 @@
     "dev": "npm run dev --workspace=apps/web",
     "build": "npm run build --workspace=@ai-scanner/web",
     "start": "npm run start --workspace=apps/web",
+    "postinstall": "npm run prisma:generate --workspace=@ai-scanner/web",
     "lint": "npm run lint --workspaces",
     "test": "npm run test --workspaces"
   },
