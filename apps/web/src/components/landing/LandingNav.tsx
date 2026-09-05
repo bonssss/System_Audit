@@ -24,6 +24,20 @@ export function LandingNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isAuthenticated = Boolean(user);
 
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    if (typeof window !== 'undefined' && window.location.pathname === '/') {
+      e.preventDefault();
+      setMobileMenuOpen(false);
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.history.pushState(null, '', `#${id}`);
+      }
+    } else {
+      setMobileMenuOpen(false);
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-background/80 border-b border-border/60 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
@@ -47,21 +61,41 @@ export function LandingNav() {
 
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-6 text-xs font-medium text-muted-foreground">
-          <a href="#simulator" className="hover:text-foreground transition-colors flex items-center gap-1.5">
+          <a
+            href="/#simulator"
+            onClick={(e) => scrollToSection(e, 'simulator')}
+            className="hover:text-foreground transition-colors flex items-center gap-1.5"
+          >
             <Sparkles className="w-3.5 h-3.5 text-amber-500" />
             <span>Live Simulator</span>
           </a>
-          <a href="#engines" className="hover:text-foreground transition-colors flex items-center gap-1.5">
+          <a
+            href="/#engines"
+            onClick={(e) => scrollToSection(e, 'engines')}
+            className="hover:text-foreground transition-colors flex items-center gap-1.5"
+          >
             <Layers className="w-3.5 h-3.5 text-blue-500" />
             <span>14 Engines</span>
           </a>
-          <a href="#architecture" className="hover:text-foreground transition-colors">
+          <a
+            href="/#architecture"
+            onClick={(e) => scrollToSection(e, 'architecture')}
+            className="hover:text-foreground transition-colors"
+          >
             Architecture
           </a>
-          <a href="#comparison" className="hover:text-foreground transition-colors">
+          <a
+            href="/#comparison"
+            onClick={(e) => scrollToSection(e, 'comparison')}
+            className="hover:text-foreground transition-colors"
+          >
             Why System Audit
           </a>
-          <a href="#faq" className="hover:text-foreground transition-colors">
+          <a
+            href="/#faq"
+            onClick={(e) => scrollToSection(e, 'faq')}
+            className="hover:text-foreground transition-colors"
+          >
             FAQ
           </a>
           <Link href="/rules" className="hover:text-foreground transition-colors">
@@ -126,38 +160,38 @@ export function LandingNav() {
         <div className="md:hidden border-t border-border bg-surface/95 backdrop-blur-md px-4 py-4 space-y-3 animate-in fade-in duration-150">
           <div className="flex flex-col space-y-2 text-xs font-medium text-muted-foreground">
             <a 
-              href="#simulator" 
-              onClick={() => setMobileMenuOpen(false)}
+              href="/#simulator" 
+              onClick={(e) => scrollToSection(e, 'simulator')}
               className="p-2 hover:bg-surface-hover rounded-lg flex items-center gap-2 text-foreground"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-500" />
               <span>Live Simulator</span>
             </a>
             <a 
-              href="#engines" 
-              onClick={() => setMobileMenuOpen(false)}
+              href="/#engines" 
+              onClick={(e) => scrollToSection(e, 'engines')}
               className="p-2 hover:bg-surface-hover rounded-lg flex items-center gap-2 text-foreground"
             >
               <Layers className="w-3.5 h-3.5 text-blue-500" />
               <span>14 Core Engines</span>
             </a>
             <a 
-              href="#architecture" 
-              onClick={() => setMobileMenuOpen(false)}
+              href="/#architecture" 
+              onClick={(e) => scrollToSection(e, 'architecture')}
               className="p-2 hover:bg-surface-hover rounded-lg"
             >
               Architecture Pipeline
             </a>
             <a 
-              href="#comparison" 
-              onClick={() => setMobileMenuOpen(false)}
+              href="/#comparison" 
+              onClick={(e) => scrollToSection(e, 'comparison')}
               className="p-2 hover:bg-surface-hover rounded-lg"
             >
               Comparison Matrix
             </a>
             <a 
-              href="#faq" 
-              onClick={() => setMobileMenuOpen(false)}
+              href="/#faq" 
+              onClick={(e) => scrollToSection(e, 'faq')}
               className="p-2 hover:bg-surface-hover rounded-lg"
             >
               FAQ

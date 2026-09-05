@@ -110,7 +110,7 @@ export default function LandingPage() {
       </section>
 
       {/* Interactive Scanner Playground Section */}
-      <section id="simulator" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section id="simulator" className="scroll-mt-20 py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-semibold border border-amber-500/20">
             <Sparkles className="w-3.5 h-3.5" />
@@ -128,7 +128,7 @@ export default function LandingPage() {
       </section>
 
       {/* 14 Core Engines Matrix Section */}
-      <section id="engines" className="py-20 border-t border-border/40 bg-surface/30">
+      <section id="engines" className="scroll-mt-20 py-20 border-t border-border/40 bg-surface/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center space-y-3 max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold border border-blue-500/20">
@@ -148,7 +148,7 @@ export default function LandingPage() {
       </section>
 
       {/* Architecture Pipeline Section */}
-      <section id="architecture" className="py-20 border-t border-border/40">
+      <section id="architecture" className="scroll-mt-20 py-20 border-t border-border/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center space-y-3 max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 text-xs font-semibold border border-purple-500/20">
@@ -168,7 +168,7 @@ export default function LandingPage() {
       </section>
 
       {/* Comparison Matrix Section */}
-      <section id="comparison" className="py-20 border-t border-border/40 bg-surface/30">
+      <section id="comparison" className="scroll-mt-20 py-20 border-t border-border/40 bg-surface/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center space-y-3 max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold border border-emerald-500/20">
@@ -248,7 +248,7 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-20 border-t border-border/40 bg-surface/30">
+      <section id="faq" className="scroll-mt-20 py-20 border-t border-border/40 bg-surface/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center space-y-3 max-w-3xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
