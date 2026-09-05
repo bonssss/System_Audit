@@ -112,6 +112,7 @@ export async function executeProjectScan(
   try {
     const scanResult = await scanner.runScan(files, {
       projectId,
+      scanId,
       onProgress: (progress) => {
         updateScanProgress({ ...progress, scanId });
       },
@@ -252,7 +253,10 @@ export async function executeProjectScan(
       ],
     });
 
-    return scanResult;
+    return {
+      ...scanResult,
+      id: scanId,
+    };
   } catch (error: any) {
     logger.error({ error, scanId }, 'Project scan execution failed');
     await db.scan.update({

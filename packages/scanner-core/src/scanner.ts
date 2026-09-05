@@ -20,6 +20,7 @@ import { analyzeGitHistory } from './modules/git';
 
 export interface ScanOptions {
   projectId: string;
+  scanId?: string;
   onProgress?: (progress: ScanProgress) => void;
 }
 
@@ -28,7 +29,7 @@ export class ProjectScanner {
 
   public async runScan(files: ProjectFileEntry[], options: ScanOptions): Promise<ScanResult> {
     const startTime = Date.now();
-    const scanId = `scan-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
+    const scanId = options.scanId || `scan-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
     const allIssues: ScanIssue[] = [];
 
     const reportProgress = (step: number, total: number, name: string, msg: string) => {
