@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b"/>
+      <stop offset="100%" stop-color="#09090b"/>
+    </linearGradient>
+    <linearGradient id="strokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#52525b"/>
+      <stop offset="100%" stop-color="#27272a"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer Rounded Square Container -->
+  <rect width="32" height="32" rx="7.5" fill="url(#bgGrad)"/>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="7" fill="none" stroke="url(#strokeGrad)"/>
+
+  <!-- Shield Shape -->
+  <path d="M16 6 L23 9.5 V15.5 C23 20.2 19.8 24.5 16 26 C12.2 24.5 9 20.2 9 15.5 V9.5 L16 6 Z" 
+        fill="#18181b" 
+        stroke="url(#accentGrad)" 
+        stroke-width="1.8" 
+        stroke-linejoin="round"/>
+
+  <!-- Audit Verification Symbol -->
+  <path d="M13 16 L15 18 L19.5 13.5" 
+        fill="none" 
+        stroke="url(#accentGrad)" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+</svg>

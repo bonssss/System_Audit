@@ -9,6 +9,14 @@ import { SidebarProvider } from '@/lib/sidebar-context';
 export const metadata: Metadata = {
   title: 'System Audit - Enterprise Code Security Platform',
   description: 'AI-powered project scanner and system auditing security platform.',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+  },
 };
 
 export default function RootLayout({
