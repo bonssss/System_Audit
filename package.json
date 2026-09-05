@@ -2,7 +2,7 @@
   "name": "ai-project-scanner",
   "version": "1.0.0",
   "private": true,
-  "description": "Commercial-grade AI-powered Project Scanner & Code Security Platform",
+  "description": "Commercial-grade AI-powered System Audit & Code Security Platform",
   "workspaces": [
     "apps/*",
     "packages/*"

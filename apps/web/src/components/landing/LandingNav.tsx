@@ -34,7 +34,7 @@ export function LandingNav() {
           </div>
           <div className="flex flex-col">
             <div className="font-bold text-sm tracking-tight text-foreground flex items-center gap-2">
-              <span>AuditAI</span>
+              <span>System Audit</span>
               <span className="text-[10px] bg-foreground/10 text-foreground font-semibold px-2 py-0.5 rounded-full border border-border">
                 v2.4 PRO
               </span>
@@ -59,7 +59,7 @@ export function LandingNav() {
             Architecture
           </a>
           <a href="#comparison" className="hover:text-foreground transition-colors">
-            Why AuditAI
+            Why System Audit
           </a>
           <a href="#faq" className="hover:text-foreground transition-colors">
             FAQ

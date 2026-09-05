@@ -10,16 +10,16 @@ interface FaqItem {
 
 const FAQS: FaqItem[] = [
   {
-    question: 'How does AuditAI differ from traditional linters and legacy SAST tools?',
-    answer: 'Traditional linters only look for style issues and simple syntax errors, while legacy SAST tools often produce thousands of noisy false positives without showing you how to fix them. AuditAI pairs 14 deep static & AST engines (measuring cognitive complexity, OWASP vulnerabilities, Shannon entropy secrets, N+1 query loops, and Docker/K8s misconfigurations) with an Autonomous AI Synthesizer that generates ready-to-merge unified diff patches for each finding.'
+    question: 'How does System Audit differ from traditional linters and legacy SAST tools?',
+    answer: 'Traditional linters only look for style issues and simple syntax errors, while legacy SAST tools often produce thousands of noisy false positives without showing you how to fix them. System Audit pairs 14 deep static & AST engines (measuring cognitive complexity, OWASP vulnerabilities, Shannon entropy secrets, N+1 query loops, and Docker/K8s misconfigurations) with an Autonomous AI Synthesizer that generates ready-to-merge unified diff patches for each finding.'
   },
   {
-    question: 'Does AuditAI send my source code to external servers?',
-    answer: 'No. AuditAI is architected with a strict privacy-first model. Deterministic AST parsing and static analysis occur entirely locally in ephemeral worker memory. For AI remediations, you can choose to connect to your preferred commercial provider (OpenAI, Anthropic, Gemini) or configure an air-gapped local model (Ollama, vLLM, DeepSeek) so zero bytes ever leave your environment.'
+    question: 'Does System Audit send my source code to external servers?',
+    answer: 'No. System Audit is architected with a strict privacy-first model. Deterministic AST parsing and static analysis occur entirely locally in ephemeral worker memory. For AI remediations, you can choose to connect to your preferred commercial provider (OpenAI, Anthropic, Gemini) or configure an air-gapped local model (Ollama, vLLM, DeepSeek) so zero bytes ever leave your environment.'
   },
   {
     question: 'How does the AI synthesize unified diffs without hallucinating?',
-    answer: 'AuditAI feeds the exact AST node coordinates, code context slice, and deterministic CWE rule violation into a fine-tuned remediation prompt. The generated diff is then re-parsed against our AST tokenizer to verify syntax correctness and ensure the vulnerability is resolved before presenting the patch to the developer.'
+    answer: 'System Audit feeds the exact AST node coordinates, code context slice, and deterministic CWE rule violation into a fine-tuned remediation prompt. The generated diff is then re-parsed against our AST tokenizer to verify syntax correctness and ensure the vulnerability is resolved before presenting the patch to the developer.'
   },
   {
     question: 'What report formats can I export after an audit?',
@@ -27,7 +27,7 @@ const FAQS: FaqItem[] = [
   },
   {
     question: 'Can I add custom static analysis rules or adjust severity thresholds?',
-    answer: 'Yes! AuditAI features a dedicated Rule Catalog where you can enable or disable specific rules, customize severity levels (Critical, High, Medium, Low, Info), and fine-tune Shannon entropy bit thresholds and cyclomatic complexity limits to match your organization’s engineering standards.'
+    answer: 'Yes! System Audit features a dedicated Rule Catalog where you can enable or disable specific rules, customize severity levels (Critical, High, Medium, Low, Info), and fine-tune Shannon entropy bit thresholds and cyclomatic complexity limits to match your organization’s engineering standards.'
   }
 ];
 

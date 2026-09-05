@@ -5,8 +5,8 @@ import { AuthProvider } from '@/lib/auth-context';
 import { ThemeProvider } from '@/lib/theme-context';
 
 export const metadata: Metadata = {
-  title: 'AI Project Scanner - Enterprise Code Security Platform',
-  description: 'AI-powered project scanner and code security platform.',
+  title: 'System Audit - Enterprise Code Security Platform',
+  description: 'AI-powered project scanner and system auditing security platform.',
 };
 
 export default function RootLayout({

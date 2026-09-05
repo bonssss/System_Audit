@@ -49,7 +49,7 @@ export default function LandingPage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span className="font-semibold text-foreground">AuditAI v2.4 Released</span>
+            <span className="font-semibold text-foreground">System Audit v2.4 Released</span>
             <span className="text-muted-foreground/60">•</span>
             <span className="font-mono text-[11px]">14 AST Engines + Unified Diff AI</span>
           </div>
@@ -117,7 +117,7 @@ export default function LandingPage() {
             <span>Interactive Code Sandbox</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
-            See How AuditAI Detects & Fixes Bugs In Real-Time
+            See How System Audit Detects & Fixes Bugs In Real-Time
           </h2>
           <p className="text-sm text-muted-foreground">
             Select a vulnerability preset below or click &quot;Run Engine Scan&quot; to test our multi-engine tokenizer, entropy calculations, and unified diff synthesizer.
@@ -173,10 +173,10 @@ export default function LandingPage() {
           <div className="text-center space-y-3 max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold border border-emerald-500/20">
               <ShieldAlert className="w-3.5 h-3.5" />
-              <span>Why Engineers Choose AuditAI</span>
+              <span>Why Engineers Choose System Audit</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
-              AuditAI vs Legacy SAST & Linters
+              System Audit vs Legacy SAST & Linters
             </h2>
             <p className="text-sm text-muted-foreground">
               Don’t just get dumped with 500 unhelpful alert warnings. Get verified, context-aware unified diff patches ready to merge.
@@ -255,7 +255,7 @@ export default function LandingPage() {
               Frequently Asked Questions
             </h2>
             <p className="text-sm text-muted-foreground">
-              Everything you need to know about AuditAI, local LLM execution, and repository privacy.
+              Everything you need to know about System Audit, local LLM execution, and repository privacy.
             </p>
           </div>
 
@@ -312,7 +312,7 @@ export default function LandingPage() {
               <ShieldAlert className="w-4 h-4" />
             </div>
             <div>
-              <div className="font-bold text-foreground">AuditAI Platform</div>
+              <div className="font-bold text-foreground">System Audit Platform</div>
               <div className="text-[10px] text-muted-foreground font-mono">
                 Commercial Static Analysis & AI Remediation
               </div>

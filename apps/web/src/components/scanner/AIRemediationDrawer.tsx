@@ -37,7 +37,7 @@ export function AIRemediationDrawer({ issue, onClose }: AIRemediationDrawerProps
     businessImpact: 'High/Medium operational risk: vulnerability can lead to data exposure, unauthorized manipulation, or resource exhaustion.',
     recommendedFix: `Refactor code location to use validated input sanitization, non-root execution contexts, or parameterized statement templates.`,
     diffPatch: issue.location?.snippet 
-      ? `--- a/${issue.location.filePath}\n+++ b/${issue.location.filePath}\n@@ -${issue.location.startLine},1 +${issue.location.startLine},2 @@\n-  ${issue.location.snippet}\n+  // ✅ Remediated via AuditAI\n+  // ${issue.location.snippet.trim()}`
+      ? `--- a/${issue.location.filePath}\n+++ b/${issue.location.filePath}\n@@ -${issue.location.startLine},1 +${issue.location.startLine},2 @@\n-  ${issue.location.snippet}\n+  // ✅ Remediated via System Audit\n+  // ${issue.location.snippet.trim()}`
       : `// Unified diff patch for ${issue.title}\n// Aligned with ${issue.cwe || issue.ruleId}`,
     confidence: 99,
     estimatedEffort: '15 minutes',
@@ -218,7 +218,7 @@ export function AIRemediationDrawer({ issue, onClose }: AIRemediationDrawerProps
 
         {/* Drawer Footer */}
         <div className="p-4 border-t border-border bg-muted/20 flex items-center justify-between">
-          <span className="text-[11px] font-mono text-muted-foreground">AuditAI Autonomous Diff Synthesizer</span>
+          <span className="text-[11px] font-mono text-muted-foreground">System Audit Autonomous Diff Synthesizer</span>
           <button
             onClick={onClose}
             className="px-5 py-2 bg-foreground text-background hover:opacity-90 text-xs font-mono font-bold rounded-xl transition-all shadow-sm"

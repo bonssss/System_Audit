@@ -46,7 +46,7 @@ export function Sidebar() {
         </div>
         <div>
           <div className="font-bold text-sm tracking-tight text-foreground flex items-center gap-1.5">
-            <span>AI Scanner</span>
+            <span>System Audit</span>
             <span className="text-[9px] bg-foreground/10 text-foreground font-semibold px-1.5 py-0.5 rounded border border-border">
               PRO
             </span>

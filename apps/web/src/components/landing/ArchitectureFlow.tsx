@@ -117,7 +117,7 @@ export function ArchitectureFlow() {
             Zero Code Retention & 100% On-Premise / Local LLM Execution
           </h4>
           <p className="text-xs text-muted-foreground max-w-2xl leading-relaxed">
-            Your source code is tokenized in ephemeral worker memory. For strict compliance environments, connect AuditAI to local Ollama or vLLM instances without sending bytes outside your perimeter.
+            Your source code is tokenized in ephemeral worker memory. For strict compliance environments, connect System Audit to local Ollama or vLLM instances without sending bytes outside your perimeter.
           </p>
         </div>
 

@@ -83,7 +83,7 @@ export function LandingComparison() {
               <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-foreground font-mono bg-foreground/5 text-center">
                 <div className="flex items-center justify-center gap-1.5 text-foreground">
                   <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                  <span>AuditAI (Pro)</span>
+                  <span>System Audit (Pro)</span>
                 </div>
               </th>
               <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-muted-foreground font-mono text-center">

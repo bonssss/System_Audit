@@ -1,4 +1,4 @@
-# AI Project Scanner (AuditAI)
+# System Audit
 
 > Enterprise-grade, multi-language static code analysis, security auditing, and AI-powered remediation platform built with Next.js 15, TypeScript, and Prisma ORM.
 
@@ -12,7 +12,7 @@
 
 ## 📌 Overview
 
-**AI Project Scanner** is a commercial-grade SaaS code auditing platform combining static code analysis (similar to SonarQube + Snyk + DeepSource + GitHub Code Scanning) with automated **AI-powered unified diff remediations**.
+**System Audit** is a commercial-grade SaaS code auditing platform combining static code analysis (similar to SonarQube + Snyk + DeepSource + GitHub Code Scanning) with automated **AI-powered unified diff remediations**.
 
 Users can upload source code archives (`.zip`) or connect Git repositories to analyze their entire codebase across **14 specialized scanning modules**, producing executive health ratings (A+ to F), risk diagnostics, architecture graphs, and compliance reports.
 

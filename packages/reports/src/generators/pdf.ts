@@ -1,6 +1,6 @@
 import { ScanResult } from '@ai-scanner/shared';
 
-export function generatePrintablePdfHtml(scan: ScanResult, projectName: string = 'AI Project Scanner'): string {
+export function generatePrintablePdfHtml(scan: ScanResult, projectName: string = 'System Audit'): string {
   const criticalCount = scan.issues.filter((i) => i.severity === 'CRITICAL').length;
   const highCount = scan.issues.filter((i) => i.severity === 'HIGH').length;
   const mediumCount = scan.issues.filter((i) => i.severity === 'MEDIUM').length;
