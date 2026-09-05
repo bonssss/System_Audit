@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { AuthProvider } from '@/lib/auth-context';
 import { ThemeProvider } from '@/lib/theme-context';
-
 import { SidebarProvider } from '@/lib/sidebar-context';
 
 export const metadata: Metadata = {
@@ -50,6 +50,36 @@ export default function RootLayout({
             </SidebarProvider>
           </AuthProvider>
         </ThemeProvider>
+
+        {/* Statcounter Code */}
+        <Script id="statcounter-config" strategy="afterInteractive">
+          {`
+            var sc_project=13353564; 
+            var sc_invisible=1; 
+            var sc_security="d1397a02"; 
+          `}
+        </Script>
+        <Script
+          src="https://www.statcounter.com/counter/counter.js"
+          strategy="afterInteractive"
+        />
+        <noscript>
+          <div className="statcounter">
+            <a
+              title="Web Analytics Made Easy - Statcounter"
+              href="https://statcounter.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                className="statcounter"
+                src="https://c.statcounter.com/13353564/0/d1397a02/1/"
+                alt="Web Analytics Made Easy - Statcounter"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </a>
+          </div>
+        </noscript>
       </body>
     </html>
   );
