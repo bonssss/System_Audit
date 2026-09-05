@@ -9,9 +9,7 @@ import { ProjectFileEntry } from '@ai-scanner/scanner-core';
 export async function POST(req: NextRequest) {
   try {
     const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ success: false, error: 'Unauthorized: Please log in to run scans' }, { status: 401 });
-    }
+    const userId = user?.id || null;
 
     const contentType = req.headers.get('content-type') || '';
 
@@ -44,7 +42,7 @@ export async function POST(req: NextRequest) {
         if (!existingProj) {
           return NextResponse.json({ success: false, error: 'Project not found' }, { status: 404 });
         }
-        if (user.role !== 'ADMIN' && existingProj.userId && existingProj.userId !== user.id) {
+        if (user && user.role !== 'ADMIN' && existingProj.userId && existingProj.userId !== user.id) {
           return NextResponse.json({ success: false, error: 'Forbidden: Access denied to this project' }, { status: 403 });
         }
       } else {
@@ -52,7 +50,7 @@ export async function POST(req: NextRequest) {
           data: {
             name: projectName,
             sourceType: 'ZIP_UPLOAD',
-            userId: user.id,
+            userId: userId,
           },
         });
         projectId = proj.id;
@@ -72,7 +70,7 @@ export async function POST(req: NextRequest) {
         if (!existingProj) {
           return NextResponse.json({ success: false, error: 'Project not found' }, { status: 404 });
         }
-        if (user.role !== 'ADMIN' && existingProj.userId && existingProj.userId !== user.id) {
+        if (user && user.role !== 'ADMIN' && existingProj.userId && existingProj.userId !== user.id) {
           return NextResponse.json({ success: false, error: 'Forbidden: Access denied to this project' }, { status: 403 });
         }
       } else if (projectId === 'sandbox') {
@@ -95,7 +93,7 @@ export async function POST(req: NextRequest) {
               repositoryUrl: gitUrl,
               defaultBranch: gitResult.defaultBranch,
               sourceType: 'GITHUB',
-              userId: user.id,
+              userId: userId,
             },
           });
           projectId = proj.id;
@@ -112,7 +110,7 @@ export async function POST(req: NextRequest) {
               name: sample.name,
               description: sample.description,
               sourceType: 'LOCAL',
-              userId: user.id,
+              userId: userId,
             },
           });
           projectId = proj.id;
@@ -126,7 +124,7 @@ export async function POST(req: NextRequest) {
             data: {
               name: projectName || 'AST Sandbox Code',
               sourceType: 'LOCAL',
-              userId: user.id,
+              userId: userId,
             },
           });
           projectId = proj.id;

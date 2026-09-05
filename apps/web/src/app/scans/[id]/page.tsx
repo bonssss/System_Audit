@@ -33,19 +33,25 @@ export default function ScanDetailPage({ params }: { params: Promise<{ id: strin
   const { id } = use(params);
   const [scan, setScan] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'ISSUES' | 'CODE' | 'ARCH' | 'DEPS' | 'REPORTS'>('OVERVIEW');
   const [selectedFileForViewer, setSelectedFileForViewer] = useState<string>('');
   const [selectedLineForViewer, setSelectedLineForViewer] = useState<number>(1);
 
   const fetchScan = async () => {
     try {
+      setIsLoading(true);
+      setErrorMsg('');
       const res = await fetch(`/api/scans/${id}`);
       const data = await res.json();
-      if (data.success) {
+      if (data.success && data.data) {
         setScan(data.data);
+      } else {
+        setErrorMsg(data.error || 'The requested scan could not be loaded.');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to fetch scan', err);
+      setErrorMsg(err.message || 'Network error while loading scan details.');
     } finally {
       setIsLoading(false);
     }
@@ -66,12 +72,29 @@ export default function ScanDetailPage({ params }: { params: Promise<{ id: strin
 
   if (!scan) {
     return (
-      <div className="flex-1 p-8 text-center">
+      <div className="flex-1 p-12 text-center max-w-md mx-auto space-y-4">
+        <div className="w-12 h-12 rounded-2xl bg-muted/40 border border-border flex items-center justify-center mx-auto text-muted-foreground">
+          <ShieldAlert className="w-6 h-6" />
+        </div>
         <h2 className="text-lg font-bold text-foreground">Scan Not Found</h2>
-        <p className="text-xs text-muted-foreground mt-1">The requested scan ID could not be loaded.</p>
-        <Link href="/dashboard" className="inline-block mt-4 text-foreground underline text-xs font-bold">
-          ← Return to Dashboard
-        </Link>
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          {errorMsg || 'The requested scan ID could not be loaded from the database.'}
+        </p>
+        <div className="flex items-center justify-center gap-3 pt-2">
+          <button
+            onClick={fetchScan}
+            className="px-4 py-2 bg-foreground text-background hover:opacity-90 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2"
+          >
+            <RefreshCw className="w-3.5 h-3.5" />
+            <span>Retry</span>
+          </button>
+          <Link
+            href="/dashboard"
+            className="px-4 py-2 bg-surface hover:bg-surface-hover border border-border rounded-xl text-xs font-semibold text-foreground transition-colors"
+          >
+            Return to Dashboard
+          </Link>
+        </div>
       </div>
     );
   }

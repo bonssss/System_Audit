@@ -5,11 +5,8 @@ import { getCurrentUser } from '@/lib/auth';
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { id } = await params;
+
     const scanIncludes = {
       project: true,
       statistics: true,
@@ -44,27 +41,47 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
       return NextResponse.json({ success: false, error: 'Scan not found' }, { status: 404 });
     }
 
-    // Verify ownership
-    if (scan.project.userId !== user.id) {
+    // Verify ownership only if the project is private to another user and user is not admin
+    if (scan.project?.userId && user && user.role !== 'ADMIN' && scan.project.userId !== user.id) {
       return NextResponse.json({ success: false, error: 'Forbidden: Access denied to this scan' }, { status: 403 });
     }
 
-    // Parse remediationJson
-    const formattedIssues = scan.issues.map((i) => ({
-      ...i,
-      remediation: i.remediationJson ? JSON.parse(i.remediationJson) : null,
-      location: {
-        filePath: i.filePath,
-        startLine: i.startLine,
-        endLine: i.endLine,
-        snippet: i.snippet,
-      },
-    }));
+    // Parse remediationJson and vulnerabilitiesJson safely
+    const formattedIssues = scan.issues.map((i) => {
+      let remediation = null;
+      if (i.remediationJson) {
+        try {
+          remediation = typeof i.remediationJson === 'string' ? JSON.parse(i.remediationJson) : i.remediationJson;
+        } catch {
+          remediation = null;
+        }
+      }
+      return {
+        ...i,
+        remediation,
+        location: {
+          filePath: i.filePath,
+          startLine: i.startLine,
+          endLine: i.endLine,
+          snippet: i.snippet,
+        },
+      };
+    });
 
-    const formattedDeps = scan.dependencies.map((d) => ({
-      ...d,
-      vulnerabilities: d.vulnerabilitiesJson ? JSON.parse(d.vulnerabilitiesJson) : [],
-    }));
+    const formattedDeps = scan.dependencies.map((d) => {
+      let vulnerabilities = [];
+      if (d.vulnerabilitiesJson) {
+        try {
+          vulnerabilities = typeof d.vulnerabilitiesJson === 'string' ? JSON.parse(d.vulnerabilitiesJson) : d.vulnerabilitiesJson;
+        } catch {
+          vulnerabilities = [];
+        }
+      }
+      return {
+        ...d,
+        vulnerabilities,
+      };
+    });
 
     return NextResponse.json({
       success: true,
@@ -75,6 +92,6 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
       },
     });
   } catch (err: any) {
-    return NextResponse.json({ success: false, error: err.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: err.message || 'Internal Server Error' }, { status: 500 });
   }
 }

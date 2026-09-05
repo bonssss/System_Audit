@@ -32,7 +32,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 
     // Verify project belongs to current user
-    if (project.userId !== user.id) {
+    if (project.userId && user.role !== 'ADMIN' && project.userId !== user.id) {
       return NextResponse.json({ success: false, error: 'Forbidden: Access denied to this project' }, { status: 403 });
     }
 
@@ -59,7 +59,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
       return NextResponse.json({ success: false, error: 'Project not found' }, { status: 404 });
     }
 
-    if (project.userId !== user.id) {
+    if (project.userId && user.role !== 'ADMIN' && project.userId !== user.id) {
       return NextResponse.json({ success: false, error: 'Forbidden: Cannot delete project of another user' }, { status: 403 });
     }
 
